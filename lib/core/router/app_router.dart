@@ -3,10 +3,10 @@ import 'package:go_router/go_router.dart';
 import 'package:sunnylon/core/shell/app_shell.dart';
 import 'package:sunnylon/features/auth/presentation/forgot_password/forgot_password_screen.dart';
 import 'package:sunnylon/features/auth/presentation/login/login_screen.dart';
-import 'package:sunnylon/features/routes/presentation/clients_screen.dart';
-import 'package:sunnylon/features/routes/presentation/loans_screen.dart';
-import 'package:sunnylon/features/routes/presentation/settings_screen.dart';
-import 'package:sunnylon/features/routes/presentation/today_route_screen.dart';
+import 'package:sunnylon/features/clients/presentation/clients_screen.dart';
+import 'package:sunnylon/features/home/presentation/today_route_screen.dart';
+import 'package:sunnylon/features/loans/presentation/loans_screen.dart';
+import 'package:sunnylon/features/settings/presentation/settings_screen.dart';
 
 // Private navigators
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
