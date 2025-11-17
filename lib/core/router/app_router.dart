@@ -4,6 +4,9 @@ import 'package:sunnylon/core/shell/app_shell.dart';
 import 'package:sunnylon/features/auth/presentation/forgot_password/forgot_password_screen.dart';
 import 'package:sunnylon/features/auth/presentation/login/login_screen.dart';
 import 'package:sunnylon/features/clients/presentation/clients_screen.dart';
+import 'package:sunnylon/features/collections/domain/collection_customer.dart';
+import 'package:sunnylon/features/collections/presentation/collection_detail_screen.dart';
+import 'package:sunnylon/features/collections/presentation/register_payment_screen.dart';
 import 'package:sunnylon/features/home/presentation/today_route_screen.dart';
 import 'package:sunnylon/features/loans/presentation/loans_screen.dart';
 import 'package:sunnylon/features/settings/presentation/settings_screen.dart';
@@ -26,6 +29,22 @@ final router = GoRouter(
       path: '/forgot-password',
       name: 'forgot-password',
       builder: (context, state) => const ForgotPasswordScreen(),
+    ),
+    GoRoute(
+      path: '/collections/detail',
+      name: 'collection-detail',
+      builder: (context, state) {
+        final customer = state.extra as CollectionCustomer;
+        return CollectionDetailScreen(customer: customer);
+      },
+    ),
+    GoRoute(
+      path: '/collections/register-payment',
+      name: 'register-payment',
+      builder: (context, state) {
+        final customer = state.extra as CollectionCustomer;
+        return RegisterPaymentScreen(customer: customer);
+      },
     ),
 
     // Routes that will have the bottom navigation bar
