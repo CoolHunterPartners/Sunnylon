@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:sunnylon/core/common/constants/app_images.dart';
 import 'package:sunnylon/core/widgets/primary_button.dart';
-import 'package:sunnylon/features/collections/domain/collection_customer.dart';
+import 'package:sunnylon/features/home/domain/collection_customer.dart';
 
 class TodayRouteScreen extends StatelessWidget {
   const TodayRouteScreen({super.key});

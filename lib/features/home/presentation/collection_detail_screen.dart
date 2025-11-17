@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sunnylon/core/widgets/primary_button.dart';
-import 'package:sunnylon/features/collections/domain/collection_customer.dart';
-import 'package:sunnylon/features/collections/presentation/widgets/mark_status_bottom_sheet.dart';
+import 'package:sunnylon/features/home/domain/collection_customer.dart';
+import 'package:sunnylon/features/home/presentation/widgets/mark_status_bottom_sheet.dart';
 
 class CollectionDetailScreen extends StatelessWidget {
   const CollectionDetailScreen({super.key, required this.customer});
