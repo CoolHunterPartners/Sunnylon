@@ -16,7 +16,7 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 final _shellNavigatorKey = GlobalKey<NavigatorState>();
 
 final router = GoRouter(
-  initialLocation: '/',
+  initialLocation: '/login',
   navigatorKey: _rootNavigatorKey,
   routes: [
     // Routes that shouldn't have the bottom navigation bar

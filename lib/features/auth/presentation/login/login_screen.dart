@@ -102,7 +102,7 @@ class LoginScreen extends StatelessWidget {
                   // 6. Login Button
                   PrimaryButton(
                     text: 'Iniciar sesión',
-                    onPressed: () {},
+                    onPressed: () => context.go('/'),
                   ),
                   const SizedBox(height: 24),
 

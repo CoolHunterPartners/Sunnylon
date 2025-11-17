@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sunnylon/core/widgets/primary_button.dart';
 import 'package:sunnylon/features/collections/domain/collection_customer.dart';
 import 'package:sunnylon/features/collections/presentation/widgets/mark_status_bottom_sheet.dart';
-import 'package:go_router/go_router.dart';
 
 class CollectionDetailScreen extends StatelessWidget {
   const CollectionDetailScreen({super.key, required this.customer});
@@ -43,17 +43,23 @@ class CollectionDetailScreen extends StatelessWidget {
                       children: [
                         Text(
                           customer.name,
-                          style: textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
+                          style: textTheme.headlineSmall?.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                         const SizedBox(height: 4),
                         Text(
                           'ID: ${customer.id}',
-                          style: textTheme.bodyLarge?.copyWith(color: Colors.grey[600]),
+                          style: textTheme.bodyLarge?.copyWith(
+                            color: Colors.grey[600],
+                          ),
                         ),
                         const SizedBox(height: 4),
                         Text(
                           customer.status,
-                          style: textTheme.bodyLarge?.copyWith(color: Colors.grey[600]),
+                          style: textTheme.bodyLarge?.copyWith(
+                            color: Colors.grey[600],
+                          ),
                         ),
                       ],
                     ),
@@ -61,14 +67,26 @@ class CollectionDetailScreen extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 24),
-              _buildInfoRow('Monto a cobrar hoy', '\$${customer.todayAmount.toStringAsFixed(2)}', context, isBold: true),
-              _buildInfoRow('Saldo total pendiente', '\$${customer.totalPendingAmount.toStringAsFixed(2)}', context),
+              _buildInfoRow(
+                'Monto a cobrar hoy',
+                '\$${customer.todayAmount.toStringAsFixed(2)}',
+                context,
+                isBold: true,
+              ),
+              _buildInfoRow(
+                'Saldo total pendiente',
+                '\$${customer.totalPendingAmount.toStringAsFixed(2)}',
+                context,
+              ),
               _buildInfoRow('Días de atraso', '${customer.daysLate}', context),
               const SizedBox(height: 24),
               PrimaryButton(
                 text: 'Registrar pago',
                 onPressed: () {
-                  context.push('/collections/register-payment', extra: customer);
+                  context.push(
+                    '/collections/register-payment',
+                    extra: customer,
+                  );
                 },
               ),
               const SizedBox(height: 12),
@@ -78,11 +96,12 @@ class CollectionDetailScreen extends StatelessWidget {
                   onPressed: () {
                     showModalBottomSheet(
                       context: context,
-                      builder: (context) => MarkStatusBottomSheet(customer: customer),
+                      builder: (context) =>
+                          MarkStatusBottomSheet(customer: customer),
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: colorScheme.surfaceVariant,
+                    backgroundColor: colorScheme.surfaceContainerHighest,
                     foregroundColor: colorScheme.onSurfaceVariant,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
@@ -93,10 +112,19 @@ class CollectionDetailScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 24),
-              Text('Opciones', style: textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)),
+              Text(
+                'Opciones',
+                style: textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               const SizedBox(height: 8),
               _buildOptionRow('Ver historial de pagos', Icons.history, () {}),
-              _buildOptionRow('Ver dirección', Icons.location_on_outlined, () {}),
+              _buildOptionRow(
+                'Ver dirección',
+                Icons.location_on_outlined,
+                () {},
+              ),
               _buildOptionRow('Llamar', Icons.phone_outlined, () {}),
               _buildOptionRow('WhatsApp', Icons.message_outlined, () {}),
             ],
@@ -106,14 +134,22 @@ class CollectionDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildInfoRow(String label, String value, BuildContext context, {bool isBold = false}) {
+  Widget _buildInfoRow(
+    String label,
+    String value,
+    BuildContext context, {
+    bool isBold = false,
+  }) {
     final textTheme = Theme.of(context).textTheme;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: textTheme.bodyLarge?.copyWith(color: Colors.grey[600])),
+          Text(
+            label,
+            style: textTheme.bodyLarge?.copyWith(color: Colors.grey[600]),
+          ),
           Text(
             value,
             style: textTheme.bodyLarge?.copyWith(
