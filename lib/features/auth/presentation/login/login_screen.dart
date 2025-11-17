@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sunnylon/core/theme/sunnylon_theme.dart';
+
 import '../../../../core/common/constants/app_images.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -27,13 +27,15 @@ class LoginScreen extends StatelessWidget {
 
                   // 2. Titles
                   Text(
-                    'Welcome Back',
+                    'Bienvenido de nuevo',
                     textAlign: TextAlign.center,
-                    style: textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
+                    style: textTheme.headlineSmall?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'Sign in to continue to Sunnylon',
+                    'Inicia sesión para continuar en Sunnylon',
                     textAlign: TextAlign.center,
                     style: textTheme.bodyLarge,
                   ),
@@ -41,7 +43,7 @@ class LoginScreen extends StatelessWidget {
 
                   // 3. Email Input
                   Text(
-                    'Email / Username',
+                    'Correo / Usuario',
                     style: textTheme.bodyMedium?.copyWith(
                       fontWeight: FontWeight.w500,
                       color: colorScheme.onSurface,
@@ -53,7 +55,7 @@ class LoginScreen extends StatelessWidget {
                     decoration: InputDecoration(
                       prefixIcon: Icon(
                         Icons.person_outline,
-                        color: colorScheme.onBackground,
+                        color: colorScheme.onSurface,
                       ),
                     ),
                   ),
@@ -61,7 +63,7 @@ class LoginScreen extends StatelessWidget {
 
                   // 4. Password Input
                   Text(
-                    'Password',
+                    'Contraseña',
                     style: textTheme.bodyMedium?.copyWith(
                       fontWeight: FontWeight.w500,
                       color: colorScheme.onSurface,
@@ -73,7 +75,7 @@ class LoginScreen extends StatelessWidget {
                     decoration: InputDecoration(
                       prefixIcon: Icon(
                         Icons.lock_outline,
-                        color: colorScheme.onBackground,
+                        color: colorScheme.onSurface,
                       ),
                     ),
                   ),
@@ -85,7 +87,7 @@ class LoginScreen extends StatelessWidget {
                     child: TextButton(
                       onPressed: () {},
                       child: Text(
-                        'Forgot Password?',
+                        '¿Olvidaste tu contraseña?',
                         style: textTheme.bodyMedium?.copyWith(
                           color: colorScheme.primary,
                           fontWeight: FontWeight.bold,
@@ -98,7 +100,7 @@ class LoginScreen extends StatelessWidget {
                   // 6. Login Button
                   ElevatedButton(
                     onPressed: () {},
-                    child: const Text('Login'),
+                    child: const Text('Iniciar sesión'),
                   ),
                   const SizedBox(height: 24),
 
@@ -107,7 +109,7 @@ class LoginScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Don't have an account? ",
+                        '¿No tienes una cuenta? ',
                         style: textTheme.bodyMedium,
                       ),
                       TextButton(
@@ -118,7 +120,7 @@ class LoginScreen extends StatelessWidget {
                           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                         ),
                         child: Text(
-                          'Sign up',
+                          'Regístrate',
                           style: textTheme.bodyMedium?.copyWith(
                             color: colorScheme.primary,
                             fontWeight: FontWeight.bold,
