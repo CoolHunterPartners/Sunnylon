@@ -15,7 +15,7 @@ class ForgotPasswordScreen extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new),
-          onPressed: () => context.pop(),
+          onPressed: () => context.go('/login'),
         ),
         title: const Text('Restablecer Contraseña'),
         centerTitle: true,
