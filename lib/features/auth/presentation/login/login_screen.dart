@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sunnylon/core/theme/sunnylon_colors.dart';
-
+import 'package:sunnylon/core/theme/sunnylon_theme.dart';
 import '../../../../core/common/constants/app_images.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -8,8 +7,10 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Scaffold(
-      backgroundColor: SunnylonColors.background,
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -25,76 +26,55 @@ class LoginScreen extends StatelessWidget {
                   const SizedBox(height: 40),
 
                   // 2. Titles
-                  const Text(
+                  Text(
                     'Welcome Back',
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                      color: SunnylonColors.textPrimary,
-                    ),
+                    style: textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 8),
-                  const Text(
+                  Text(
                     'Sign in to continue to Sunnylon',
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: SunnylonColors.textSecondary,
-                    ),
+                    style: textTheme.bodyLarge,
                   ),
                   const SizedBox(height: 40),
 
                   // 3. Email Input
-                  const Text(
+                  Text(
                     'Email / Username',
-                    style: TextStyle(
-                      color: SunnylonColors.textPrimary,
+                    style: textTheme.bodyMedium?.copyWith(
                       fontWeight: FontWeight.w500,
+                      color: colorScheme.onSurface,
                     ),
                   ),
                   const SizedBox(height: 8),
                   TextFormField(
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
-                      prefixIcon: const Icon(
+                      prefixIcon: Icon(
                         Icons.person_outline,
-                        color: SunnylonColors.textSecondary,
+                        color: colorScheme.onBackground,
                       ),
-                      filled: true,
-                      fillColor: SunnylonColors.inputBackground,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide.none,
-                      ),
-                      contentPadding: const EdgeInsets.symmetric(vertical: 16),
                     ),
                   ),
                   const SizedBox(height: 20),
 
                   // 4. Password Input
-                  const Text(
+                  Text(
                     'Password',
-                    style: TextStyle(
-                      color: SunnylonColors.textPrimary,
+                    style: textTheme.bodyMedium?.copyWith(
                       fontWeight: FontWeight.w500,
+                      color: colorScheme.onSurface,
                     ),
                   ),
                   const SizedBox(height: 8),
                   TextFormField(
                     obscureText: true,
                     decoration: InputDecoration(
-                      prefixIcon: const Icon(
+                      prefixIcon: Icon(
                         Icons.lock_outline,
-                        color: SunnylonColors.textSecondary,
+                        color: colorScheme.onBackground,
                       ),
-                      filled: true,
-                      fillColor: SunnylonColors.inputBackground,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide.none,
-                      ),
-                      contentPadding: const EdgeInsets.symmetric(vertical: 16),
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -104,10 +84,10 @@ class LoginScreen extends StatelessWidget {
                     alignment: Alignment.centerRight,
                     child: TextButton(
                       onPressed: () {},
-                      child: const Text(
+                      child: Text(
                         'Forgot Password?',
-                        style: TextStyle(
-                          color: SunnylonColors.primary,
+                        style: textTheme.bodyMedium?.copyWith(
+                          color: colorScheme.primary,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -118,22 +98,7 @@ class LoginScreen extends StatelessWidget {
                   // 6. Login Button
                   ElevatedButton(
                     onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: SunnylonColors.primary,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 18),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      elevation: 2,
-                    ),
-                    child: const Text(
-                      'Login',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                    child: const Text('Login'),
                   ),
                   const SizedBox(height: 24),
 
@@ -141,9 +106,9 @@ class LoginScreen extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text(
+                      Text(
                         "Don't have an account? ",
-                        style: TextStyle(color: SunnylonColors.textSecondary),
+                        style: textTheme.bodyMedium,
                       ),
                       TextButton(
                         onPressed: () {},
@@ -151,11 +116,13 @@ class LoginScreen extends StatelessWidget {
                           padding: EdgeInsets.zero,
                           minimumSize: Size.zero,
                           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                          foregroundColor: SunnylonColors.primary,
                         ),
-                        child: const Text(
+                        child: Text(
                           'Sign up',
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: textTheme.bodyMedium?.copyWith(
+                            color: colorScheme.primary,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ],
