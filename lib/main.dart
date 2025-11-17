@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sunnylon/core/theme/sunnylon_theme.dart';
 import 'package:sunnylon/features/auth/presentation/login/login_screen.dart';
 
 void main() {
@@ -12,10 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Sunnylon',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+      theme: lightTheme,
       home: const LoginScreen(),
     );
   }
