@@ -24,9 +24,7 @@ class PrimaryButton extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(30), // Rounded pill shape
       ),
-      textStyle: textTheme.labelLarge?.copyWith(
-        fontWeight: FontWeight.bold,
-      ),
+      textStyle: textTheme.labelLarge?.copyWith(fontWeight: FontWeight.bold),
     );
 
     if (icon != null) {

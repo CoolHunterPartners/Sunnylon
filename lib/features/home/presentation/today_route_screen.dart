@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:sunnylon/core/common/constants/app_images.dart';
 import 'package:sunnylon/core/widgets/primary_button.dart';
+import 'package:sunnylon/features/collections/domain/collection_customer.dart';
 
 class TodayRouteScreen extends StatelessWidget {
   const TodayRouteScreen({super.key});
@@ -149,24 +151,30 @@ class _SummaryCard extends StatelessWidget {
 
 class _ClientList extends StatelessWidget {
   final clients = [
-    {
-      'name': '1. Alejandro Vargas',
-      'amount': '\$150.00',
-      'address': 'Calle Falsa 123, Springfield',
-      'status': Colors.green,
-    },
-    {
-      'name': '2. Carlos Sanchez',
-      'amount': '\$75.00',
-      'address': 'Boulevard del Sol 45',
-      'status': Colors.yellow,
-    },
-    {
-      'name': '3. Sofia Gomez',
-      'amount': '\$50.00',
-      'address': 'Plaza Mayor 10',
-      'status': Colors.yellow,
-    },
+    const CollectionCustomer(
+      id: '1',
+      name: '1. Alejandro Vargas',
+      status: 'Pagado',
+      todayAmount: 150.00,
+      totalPendingAmount: 0.00,
+      daysLate: 0,
+    ),
+    const CollectionCustomer(
+      id: '2',
+      name: '2. Carlos Sanchez',
+      status: 'Pendiente',
+      todayAmount: 75.00,
+      totalPendingAmount: 225.00,
+      daysLate: 2,
+    ),
+    const CollectionCustomer(
+      id: '3',
+      name: '3. Sofia Gomez',
+      status: 'Pendiente',
+      todayAmount: 50.00,
+      totalPendingAmount: 50.00,
+      daysLate: 0,
+    ),
   ];
 
   @override
@@ -179,10 +187,10 @@ class _ClientList extends StatelessWidget {
       itemBuilder: (context, index) {
         final client = clients[index];
         return _ClientListItem(
-          name: client['name'] as String,
-          amount: client['amount'] as String,
-          address: client['address'] as String,
-          statusColor: client['status'] as Color,
+          customer: client,
+          onTap: () {
+            context.push('/collections/detail', extra: client);
+          },
         );
       },
     );
@@ -191,59 +199,59 @@ class _ClientList extends StatelessWidget {
 
 class _ClientListItem extends StatelessWidget {
   const _ClientListItem({
-    required this.name,
-    required this.amount,
-    required this.address,
-    required this.statusColor,
+    required this.customer,
+    required this.onTap,
   });
 
-  final String name;
-  final String amount;
-  final String address;
-  final Color statusColor;
+  final CollectionCustomer customer;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final statusColor = customer.status == 'Pagado' ? Colors.green : Colors.yellow;
 
     return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Row(
-          children: [
-            const CircleAvatar(
-              radius: 24,
-              // In a real app, this would be an Image.network
-              backgroundColor: Colors.grey,
-            ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    name,
-                    style: textTheme.bodyLarge?.copyWith(
-                      fontWeight: FontWeight.w500,
+      child: InkWell(
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            children: [
+              const CircleAvatar(
+                radius: 24,
+                // In a real app, this would be an Image.network
+                backgroundColor: Colors.grey,
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      customer.name,
+                      style: textTheme.bodyLarge?.copyWith(
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(amount, style: textTheme.bodyMedium),
-                  const SizedBox(height: 4),
-                  Text(address, style: textTheme.bodySmall),
-                ],
+                    const SizedBox(height: 4),
+                    Text('\$${customer.todayAmount.toStringAsFixed(2)}', style: textTheme.bodyMedium),
+                    const SizedBox(height: 4),
+                    Text(customer.status, style: textTheme.bodySmall),
+                  ],
+                ),
               ),
-            ),
-            const SizedBox(width: 16),
-            Container(
-              width: 12,
-              height: 12,
-              decoration: BoxDecoration(
-                color: statusColor,
-                shape: BoxShape.circle,
+              const SizedBox(width: 16),
+              Container(
+                width: 12,
+                height: 12,
+                decoration: BoxDecoration(
+                  color: statusColor,
+                  shape: BoxShape.circle,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
