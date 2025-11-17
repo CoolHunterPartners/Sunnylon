@@ -38,7 +38,12 @@ class TodayRouteScreen extends StatelessWidget {
         children: [
           SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(16.0, 0, 16.0, 150.0), // Padding at the bottom for the button
+              padding: const EdgeInsets.fromLTRB(
+                16.0,
+                0,
+                16.0,
+                150.0,
+              ), // Padding at the bottom for the button
               child: Column(
                 children: [
                   _MapCard(),
@@ -51,7 +56,7 @@ class TodayRouteScreen extends StatelessWidget {
             ),
           ),
           Positioned(
-            bottom: 80, // Position above the BottomNavBar
+            bottom: 20, // Position above the BottomNavBar
             left: 24,
             right: 24,
             child: Center(
@@ -78,8 +83,11 @@ class _MapCard extends StatelessWidget {
         aspectRatio: 16 / 9,
         child: FlutterMap(
           options: const MapOptions(
-            initialCenter: LatLng(37.2104, -93.2923), // Springfield, MO
-            initialZoom: 13.0,
+            initialCenter: LatLng(
+              18.5333,
+              -69.8333,
+            ), // Villa Mella, Dominican Republic
+            initialZoom: 15.0,
           ),
           children: [
             TileLayer(
@@ -108,20 +116,16 @@ class _SummaryCard extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'Ruta de Hoy - Resumen',
-                  style: textTheme.bodySmall,
-                ),
+                Text('Ruta de Hoy - Resumen', style: textTheme.bodySmall),
                 const SizedBox(height: 4),
                 Text(
                   '\$180.00 Recaudado',
-                  style: textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+                  style: textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 const SizedBox(height: 4),
-                Text(
-                  '3/5 Clientes Visitados',
-                  style: textTheme.bodySmall,
-                ),
+                Text('3/5 Clientes Visitados', style: textTheme.bodySmall),
               ],
             ),
             Container(
@@ -217,7 +221,12 @@ class _ClientListItem extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(name, style: textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w500)),
+                  Text(
+                    name,
+                    style: textTheme.bodyLarge?.copyWith(
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
                   const SizedBox(height: 4),
                   Text(amount, style: textTheme.bodyMedium),
                   const SizedBox(height: 4),
