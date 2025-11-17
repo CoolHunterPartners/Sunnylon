@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sunnylon/core/theme/sunnylon_colors.dart';
 
+import '../../../../core/common/constants/app_images.dart';
+
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
@@ -19,10 +21,7 @@ class LoginScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   // 1. Logo
-                  Image.network(
-                    'https://lh3.googleusercontent.com/aida-public/AB6AXuAKSz975EG8iXIJ8ebeSddH7MvzcmCPCoeT6GMzGyIDQO8JEQDFE2lPloKZyxbzTq84uBKYcjaXP7L4kiVisCFO3d7WFYbhYkoOxHtUklUfXdbd_RYZl8Da_4AzEnReZlzoJ5SqVC3wdP3lNYl-tzlMx9RgwosqnvnYLNexvKbIkQeS2Wz2xMPJKCsMLCHBxBKsG0ihKuPMBfpY-qyDnOAxQeElifcVbD9sEX_nEvaCxNMzLDVE2QIrkWmIlGYotZFlsRbvZuoAcHa3',
-                    height: 80,
-                  ),
+                  Image.asset(AppImages.appHorizontalIcon, height: 100),
                   const SizedBox(height: 40),
 
                   // 2. Titles
@@ -58,7 +57,10 @@ class LoginScreen extends StatelessWidget {
                   TextFormField(
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
-                      prefixIcon: const Icon(Icons.person_outline, color: SunnylonColors.textSecondary),
+                      prefixIcon: const Icon(
+                        Icons.person_outline,
+                        color: SunnylonColors.textSecondary,
+                      ),
                       filled: true,
                       fillColor: SunnylonColors.inputBackground,
                       border: OutlineInputBorder(
@@ -73,7 +75,7 @@ class LoginScreen extends StatelessWidget {
                   // 4. Password Input
                   const Text(
                     'Password',
-                     style: TextStyle(
+                    style: TextStyle(
                       color: SunnylonColors.textPrimary,
                       fontWeight: FontWeight.w500,
                     ),
@@ -82,7 +84,10 @@ class LoginScreen extends StatelessWidget {
                   TextFormField(
                     obscureText: true,
                     decoration: InputDecoration(
-                       prefixIcon: const Icon(Icons.lock_outline, color: SunnylonColors.textSecondary),
+                      prefixIcon: const Icon(
+                        Icons.lock_outline,
+                        color: SunnylonColors.textSecondary,
+                      ),
                       filled: true,
                       fillColor: SunnylonColors.inputBackground,
                       border: OutlineInputBorder(
@@ -101,7 +106,10 @@ class LoginScreen extends StatelessWidget {
                       onPressed: () {},
                       child: const Text(
                         'Forgot Password?',
-                        style: TextStyle(color: SunnylonColors.primary, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                          color: SunnylonColors.primary,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
@@ -119,7 +127,13 @@ class LoginScreen extends StatelessWidget {
                       ),
                       elevation: 2,
                     ),
-                    child: const Text('Login', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                    child: const Text(
+                      'Login',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                   const SizedBox(height: 24),
 
@@ -137,13 +151,11 @@ class LoginScreen extends StatelessWidget {
                           padding: EdgeInsets.zero,
                           minimumSize: Size.zero,
                           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                          foregroundColor: SunnylonColors.primary
+                          foregroundColor: SunnylonColors.primary,
                         ),
                         child: const Text(
                           'Sign up',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ),
                     ],
