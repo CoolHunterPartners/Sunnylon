@@ -143,7 +143,9 @@ class _NewClientStep2ScreenState extends State<NewClientStep2Screen> {
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         decoration: BoxDecoration(
                           border: Border.all(
-                            color: theme.colorScheme.primary.withOpacity(0.5),
+                            color: theme.colorScheme.primary.withValues(
+                              alpha: 0.5,
+                            ),
                             style: BorderStyle
                                 .solid, // Flutter doesn't support dashed border natively easily without package, using solid for now or CustomPainter if strict.
                             // Note: User asked for dashed. I will simulate or use a package if available, but standard Border is solid.
@@ -153,7 +155,9 @@ class _NewClientStep2ScreenState extends State<NewClientStep2Screen> {
                             // I will use a standard OutlineButton style but customized.
                           ),
                           borderRadius: BorderRadius.circular(12),
-                          color: theme.colorScheme.primary.withOpacity(0.05),
+                          color: theme.colorScheme.primary.withValues(
+                            alpha: 0.05,
+                          ),
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,

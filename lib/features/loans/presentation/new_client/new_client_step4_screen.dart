@@ -290,12 +290,7 @@ class _NewClientStep4ScreenState extends State<NewClientStep4Screen> {
                     text: 'Siguiente',
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        // TODO: Navigate to Step 5
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Validación exitosa - Ir al paso 5'),
-                          ),
-                        );
+                        context.pushNamed('new-client-step5');
                       }
                     },
                   ),
