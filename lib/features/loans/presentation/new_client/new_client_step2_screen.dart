@@ -80,7 +80,7 @@ class _NewClientStep2ScreenState extends State<NewClientStep2Screen> {
                     // Progress Indicator
                     Center(
                       child: Text(
-                        'Paso 2 de 4',
+                        'Paso 2 de 5',
                         style: theme.textTheme.bodySmall?.copyWith(
                           color: theme.colorScheme.onSurfaceVariant,
                           fontWeight: FontWeight.w500,
@@ -99,7 +99,7 @@ class _NewClientStep2ScreenState extends State<NewClientStep2Screen> {
                       ),
                       child: FractionallySizedBox(
                         alignment: Alignment.centerLeft,
-                        widthFactor: 0.50,
+                        widthFactor: 0.40, // 2/5
                         child: Container(
                           decoration: BoxDecoration(
                             color: theme.colorScheme.primary,

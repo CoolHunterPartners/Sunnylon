@@ -42,6 +42,30 @@ class _NewClientStep1ScreenState extends State<NewClientStep1Screen> {
     }
   }
 
+  Future<void> _showExitConfirmationDialog() async {
+    final shouldExit = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('¿Salir del proceso?'),
+        content: const Text('Si sales ahora, perderás los datos ingresados.'),
+        actions: [
+          TextButton(
+            onPressed: () => context.pop(false),
+            child: const Text('Cancelar'),
+          ),
+          TextButton(
+            onPressed: () => context.pop(true),
+            child: const Text('Salir'),
+          ),
+        ],
+      ),
+    );
+
+    if (shouldExit == true && mounted) {
+      context.pop();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -52,8 +76,8 @@ class _NewClientStep1ScreenState extends State<NewClientStep1Screen> {
         title: const Text('Datos del cliente'),
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => context.pop(),
+          icon: const Icon(Icons.close),
+          onPressed: _showExitConfirmationDialog,
         ),
       ),
       body: Column(
@@ -69,7 +93,7 @@ class _NewClientStep1ScreenState extends State<NewClientStep1Screen> {
                     // Progress Indicator
                     Center(
                       child: Text(
-                        'Paso 1 de 4',
+                        'Paso 1 de 5',
                         style: theme.textTheme.bodySmall?.copyWith(
                           color: theme.colorScheme.onSurfaceVariant,
                           fontWeight: FontWeight.w500,
@@ -88,7 +112,7 @@ class _NewClientStep1ScreenState extends State<NewClientStep1Screen> {
                       ),
                       child: FractionallySizedBox(
                         alignment: Alignment.centerLeft,
-                        widthFactor: 0.25,
+                        widthFactor: 0.20, // 1/5
                         child: Container(
                           decoration: BoxDecoration(
                             color: theme.colorScheme.primary,
@@ -257,7 +281,7 @@ class _NewClientStep1ScreenState extends State<NewClientStep1Screen> {
                   child: SizedBox(
                     height: 56, // Match PrimaryButton height usually
                     child: OutlinedButton(
-                      onPressed: () => context.pop(),
+                      onPressed: _showExitConfirmationDialog,
                       style: OutlinedButton.styleFrom(
                         side: BorderSide(color: theme.dividerColor),
                         backgroundColor: theme.canvasColor,

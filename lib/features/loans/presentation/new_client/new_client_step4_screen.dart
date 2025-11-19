@@ -115,7 +115,7 @@ class _NewClientStep4ScreenState extends State<NewClientStep4Screen> {
                       ),
                       child: FractionallySizedBox(
                         alignment: Alignment.centerLeft,
-                        widthFactor: 0.80,
+                        widthFactor: 0.80, // 4/5
                         child: Container(
                           decoration: BoxDecoration(
                             color: theme.colorScheme.primary,

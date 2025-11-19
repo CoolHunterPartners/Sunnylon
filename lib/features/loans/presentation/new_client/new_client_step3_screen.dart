@@ -86,7 +86,7 @@ class _NewClientStep3ScreenState extends State<NewClientStep3Screen> {
                     // Progress Indicator
                     Center(
                       child: Text(
-                        'Paso 3 de 4',
+                        'Paso 3 de 5',
                         style: theme.textTheme.bodySmall?.copyWith(
                           color: theme.colorScheme.onSurfaceVariant,
                           fontWeight: FontWeight.w500,
@@ -105,7 +105,7 @@ class _NewClientStep3ScreenState extends State<NewClientStep3Screen> {
                       ),
                       child: FractionallySizedBox(
                         alignment: Alignment.centerLeft,
-                        widthFactor: 0.75,
+                        widthFactor: 0.60, // 3/5
                         child: Container(
                           decoration: BoxDecoration(
                             color: theme.colorScheme.primary,

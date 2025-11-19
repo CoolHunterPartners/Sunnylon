@@ -53,6 +53,32 @@ final router = GoRouter(
         return RegisterPaymentScreen(customer: customer);
       },
     ),
+    // Wizard Routes (No Bottom Nav)
+    GoRoute(
+      path: '/loans/new-client-step1',
+      name: 'new-client-step1',
+      builder: (context, state) => const NewClientStep1Screen(),
+    ),
+    GoRoute(
+      path: '/loans/new-client-step2',
+      name: 'new-client-step2',
+      builder: (context, state) => const NewClientStep2Screen(),
+    ),
+    GoRoute(
+      path: '/loans/new-client-step3',
+      name: 'new-client-step3',
+      builder: (context, state) => const NewClientStep3Screen(),
+    ),
+    GoRoute(
+      path: '/loans/new-client-step4',
+      name: 'new-client-step4',
+      builder: (context, state) => const NewClientStep4Screen(),
+    ),
+    GoRoute(
+      path: '/loans/new-client-step5',
+      name: 'new-client-step5',
+      builder: (context, state) => const NewClientStep5Screen(),
+    ),
 
     // Routes that will have the bottom navigation bar
     ShellRoute(
@@ -85,31 +111,6 @@ final router = GoRouter(
               path: 'new-existing',
               name: 'new-loan-existing',
               builder: (context, state) => const ExistingClientLoanFormScreen(),
-            ),
-            GoRoute(
-              path: 'new-client-step1',
-              name: 'new-client-step1',
-              builder: (context, state) => const NewClientStep1Screen(),
-            ),
-            GoRoute(
-              path: 'new-client-step2',
-              name: 'new-client-step2',
-              builder: (context, state) => const NewClientStep2Screen(),
-            ),
-            GoRoute(
-              path: 'new-client-step3',
-              name: 'new-client-step3',
-              builder: (context, state) => const NewClientStep3Screen(),
-            ),
-            GoRoute(
-              path: 'new-client-step4',
-              name: 'new-client-step4',
-              builder: (context, state) => const NewClientStep4Screen(),
-            ),
-            GoRoute(
-              path: 'new-client-step5',
-              name: 'new-client-step5',
-              builder: (context, state) => const NewClientStep5Screen(),
             ),
           ],
         ),
