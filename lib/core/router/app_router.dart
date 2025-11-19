@@ -8,9 +8,10 @@ import 'package:sunnylon/features/home/domain/collection_customer.dart';
 import 'package:sunnylon/features/home/presentation/collection_detail_screen.dart';
 import 'package:sunnylon/features/home/presentation/register_payment_screen.dart';
 import 'package:sunnylon/features/home/presentation/today_route_screen.dart';
-import 'package:sunnylon/features/loans/presentation/loans_screen.dart';
-import 'package:sunnylon/features/loans/presentation/new_loan_type_screen.dart';
 import 'package:sunnylon/features/loans/presentation/existing_client_loan_form_screen.dart';
+import 'package:sunnylon/features/loans/presentation/loans_screen.dart';
+import 'package:sunnylon/features/loans/presentation/new_client/new_client_step1_screen.dart';
+import 'package:sunnylon/features/loans/presentation/new_loan_type_screen.dart';
 import 'package:sunnylon/features/settings/presentation/settings_screen.dart';
 
 // Private navigators
@@ -80,6 +81,11 @@ final router = GoRouter(
               path: 'new-existing',
               name: 'new-loan-existing',
               builder: (context, state) => const ExistingClientLoanFormScreen(),
+            ),
+            GoRoute(
+              path: 'new-client-step1',
+              name: 'new-client-step1',
+              builder: (context, state) => const NewClientStep1Screen(),
             ),
           ],
         ),

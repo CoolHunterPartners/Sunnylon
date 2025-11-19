@@ -7,7 +7,7 @@ class NewLoanTypeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Nueva solicitud de préstamo'),
@@ -44,10 +44,7 @@ class NewLoanTypeScreen extends StatelessWidget {
                   title: 'Cliente nuevo',
                   subtitle: 'Registra un nuevo cliente',
                   onTap: () {
-                    // Placeholder for now
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Funcionalidad de Cliente Nuevo pendiente')),
-                    );
+                    context.pushNamed('new-client-step1');
                   },
                 ),
               ],
@@ -102,10 +99,7 @@ class _SelectionCard extends StatelessWidget {
                 color: theme.colorScheme.primary.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(8),
               ),
-              child: Icon(
-                icon,
-                color: theme.colorScheme.primary,
-              ),
+              child: Icon(icon, color: theme.colorScheme.primary),
             ),
             const SizedBox(width: 16),
             Expanded(
@@ -121,16 +115,15 @@ class _SelectionCard extends StatelessWidget {
                   Text(
                     subtitle,
                     style: theme.textTheme.bodyMedium?.copyWith(
-                      color: theme.textTheme.bodyMedium?.color?.withOpacity(0.7),
+                      color: theme.textTheme.bodyMedium?.color?.withOpacity(
+                        0.7,
+                      ),
                     ),
                   ),
                 ],
               ),
             ),
-            Icon(
-              Icons.chevron_right,
-              color: theme.disabledColor,
-            ),
+            Icon(Icons.chevron_right, color: theme.disabledColor),
           ],
         ),
       ),
