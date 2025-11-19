@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sunnylon/core/widgets/primary_button.dart';
+import 'package:sunnylon/features/loans/presentation/widgets/exit_wizard_button.dart';
 
 class NewClientStep2Screen extends StatefulWidget {
   const NewClientStep2Screen({super.key});
@@ -53,30 +54,6 @@ class _NewClientStep2ScreenState extends State<NewClientStep2Screen> {
     });
   }
 
-  Future<void> _showExitConfirmationDialog() async {
-    final shouldExit = await showDialog<bool>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('¿Salir del proceso?'),
-        content: const Text('Si sales ahora, perderás los datos ingresados.'),
-        actions: [
-          TextButton(
-            onPressed: () => context.pop(false),
-            child: const Text('Cancelar'),
-          ),
-          TextButton(
-            onPressed: () => context.pop(true),
-            child: const Text('Salir'),
-          ),
-        ],
-      ),
-    );
-
-    if (shouldExit == true && mounted) {
-      context.goNamed('loans'); // Or pop until root
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -87,12 +64,7 @@ class _NewClientStep2ScreenState extends State<NewClientStep2Screen> {
         title: const Text('Nuevo préstamo'),
         centerTitle: true,
         automaticallyImplyLeading: false,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.close),
-            onPressed: _showExitConfirmationDialog,
-          ),
-        ],
+        actions: const [ExitWizardButton()],
       ),
       body: Column(
         children: [
