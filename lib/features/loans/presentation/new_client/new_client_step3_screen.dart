@@ -2,53 +2,59 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sunnylon/core/widgets/primary_button.dart';
 
-class NewClientStep2Screen extends StatefulWidget {
-  const NewClientStep2Screen({super.key});
+class NewClientStep3Screen extends StatefulWidget {
+  const NewClientStep3Screen({super.key});
 
   @override
-  State<NewClientStep2Screen> createState() => _NewClientStep2ScreenState();
+  State<NewClientStep3Screen> createState() => _NewClientStep3ScreenState();
 }
 
-class _PhoneEntry {
+class _AddressEntry {
   String type;
-  final TextEditingController numberController;
+  final TextEditingController addressController;
+  final TextEditingController cityController;
 
-  _PhoneEntry({this.type = 'Móvil'})
-    : numberController = TextEditingController();
+  _AddressEntry({
+    this.type = 'Principal',
+    String? initialAddress,
+    String? initialCity,
+  }) : addressController = TextEditingController(text: initialAddress),
+       cityController = TextEditingController(text: initialCity);
 
   void dispose() {
-    numberController.dispose();
+    addressController.dispose();
+    cityController.dispose();
   }
 }
 
-class _NewClientStep2ScreenState extends State<NewClientStep2Screen> {
+class _NewClientStep3ScreenState extends State<NewClientStep3Screen> {
   final _formKey = GlobalKey<FormState>();
-  final List<_PhoneEntry> _phoneEntries = [];
+  final List<_AddressEntry> _addressEntries = [];
 
   @override
   void initState() {
     super.initState();
     // Start with one default entry
-    _phoneEntries.add(_PhoneEntry());
+    _addressEntries.add(_AddressEntry());
   }
 
   @override
   void dispose() {
-    for (var entry in _phoneEntries) {
+    for (var entry in _addressEntries) {
       entry.dispose();
     }
     super.dispose();
   }
 
-  void _addPhoneEntry() {
+  void _addAddressEntry() {
     setState(() {
-      _phoneEntries.add(_PhoneEntry());
+      _addressEntries.add(_AddressEntry());
     });
   }
 
-  void _removePhoneEntry(int index) {
+  void _removeAddressEntry(int index) {
     setState(() {
-      final entry = _phoneEntries.removeAt(index);
+      final entry = _addressEntries.removeAt(index);
       entry.dispose();
     });
   }
@@ -80,7 +86,7 @@ class _NewClientStep2ScreenState extends State<NewClientStep2Screen> {
                     // Progress Indicator
                     Center(
                       child: Text(
-                        'Paso 2 de 4',
+                        'Paso 3 de 4',
                         style: theme.textTheme.bodySmall?.copyWith(
                           color: theme.colorScheme.onSurfaceVariant,
                           fontWeight: FontWeight.w500,
@@ -99,7 +105,7 @@ class _NewClientStep2ScreenState extends State<NewClientStep2Screen> {
                       ),
                       child: FractionallySizedBox(
                         alignment: Alignment.centerLeft,
-                        widthFactor: 0.50,
+                        widthFactor: 0.75,
                         child: Container(
                           decoration: BoxDecoration(
                             color: theme.colorScheme.primary,
@@ -112,7 +118,7 @@ class _NewClientStep2ScreenState extends State<NewClientStep2Screen> {
 
                     // Title
                     Text(
-                      'Teléfonos de contacto',
+                      'Direcciones del cliente',
                       style: theme.textTheme.headlineMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                         color: theme.colorScheme.onSurface,
@@ -120,15 +126,15 @@ class _NewClientStep2ScreenState extends State<NewClientStep2Screen> {
                     ),
                     const SizedBox(height: 24),
 
-                    // Phone Entries
+                    // Address Entries
                     ListView.separated(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      itemCount: _phoneEntries.length,
+                      itemCount: _addressEntries.length,
                       separatorBuilder: (context, index) =>
                           const SizedBox(height: 16),
                       itemBuilder: (context, index) {
-                        return _buildPhoneCard(index, theme, isDark);
+                        return _buildAddressCard(index, theme, isDark);
                       },
                     ),
 
@@ -136,7 +142,7 @@ class _NewClientStep2ScreenState extends State<NewClientStep2Screen> {
 
                     // Add Button
                     InkWell(
-                      onTap: _addPhoneEntry,
+                      onTap: _addAddressEntry,
                       borderRadius: BorderRadius.circular(12),
                       child: Container(
                         width: double.infinity,
@@ -144,13 +150,6 @@ class _NewClientStep2ScreenState extends State<NewClientStep2Screen> {
                         decoration: BoxDecoration(
                           border: Border.all(
                             color: theme.colorScheme.primary.withOpacity(0.5),
-                            style: BorderStyle
-                                .solid, // Flutter doesn't support dashed border natively easily without package, using solid for now or CustomPainter if strict.
-                            // Note: User asked for dashed. I will simulate or use a package if available, but standard Border is solid.
-                            // Let's stick to solid with lower opacity or use a CustomPainter if critical.
-                            // For speed/standard widgets, I'll use a dotted/dashed workaround or just solid for now unless I see a utility.
-                            // Actually, let's just use a solid border that looks distinct, or a custom painter is too much boilerplate for this turn.
-                            // I will use a standard OutlineButton style but customized.
                           ),
                           borderRadius: BorderRadius.circular(12),
                           color: theme.colorScheme.primary.withOpacity(0.05),
@@ -161,7 +160,7 @@ class _NewClientStep2ScreenState extends State<NewClientStep2Screen> {
                             Icon(Icons.add, color: theme.colorScheme.primary),
                             const SizedBox(width: 8),
                             Text(
-                              'Agregar otro teléfono',
+                              'Agregar otra dirección',
                               style: TextStyle(
                                 color: theme.colorScheme.primary,
                                 fontWeight: FontWeight.bold,
@@ -172,7 +171,6 @@ class _NewClientStep2ScreenState extends State<NewClientStep2Screen> {
                         ),
                       ),
                     ),
-                    // Dashed border workaround using CustomPaint can be added later if strictly needed.
                   ],
                 ),
               ),
@@ -217,7 +215,7 @@ class _NewClientStep2ScreenState extends State<NewClientStep2Screen> {
                     text: 'Siguiente',
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        context.pushNamed('new-client-step3');
+                        context.pushNamed('new-client-step4');
                       }
                     },
                   ),
@@ -230,9 +228,9 @@ class _NewClientStep2ScreenState extends State<NewClientStep2Screen> {
     );
   }
 
-  Widget _buildPhoneCard(int index, ThemeData theme, bool isDark) {
-    final entry = _phoneEntries[index];
-    final showDelete = _phoneEntries.length > 1;
+  Widget _buildAddressCard(int index, ThemeData theme, bool isDark) {
+    final entry = _addressEntries[index];
+    final showDelete = _addressEntries.length > 1;
 
     return Container(
       padding: const EdgeInsets.all(16),
@@ -250,7 +248,7 @@ class _NewClientStep2ScreenState extends State<NewClientStep2Screen> {
             Align(
               alignment: Alignment.centerRight,
               child: InkWell(
-                onTap: () => _removePhoneEntry(index),
+                onTap: () => _removeAddressEntry(index),
                 borderRadius: BorderRadius.circular(20),
                 child: Padding(
                   padding: const EdgeInsets.all(4.0),
@@ -263,8 +261,8 @@ class _NewClientStep2ScreenState extends State<NewClientStep2Screen> {
               ),
             ),
 
-          // Phone Type
-          _buildLabel(theme, 'Tipo de teléfono'),
+          // Address Type
+          _buildLabel(theme, 'Tipo de dirección'),
           DropdownButtonFormField<String>(
             initialValue: entry.type,
             decoration: InputDecoration(
@@ -274,7 +272,7 @@ class _NewClientStep2ScreenState extends State<NewClientStep2Screen> {
               contentPadding: const EdgeInsets.all(16),
             ),
             items: const [
-              DropdownMenuItem(value: 'Móvil', child: Text('Móvil')),
+              DropdownMenuItem(value: 'Principal', child: Text('Principal')),
               DropdownMenuItem(value: 'Casa', child: Text('Casa')),
               DropdownMenuItem(value: 'Trabajo', child: Text('Trabajo')),
               DropdownMenuItem(value: 'Otro', child: Text('Otro')),
@@ -289,13 +287,32 @@ class _NewClientStep2ScreenState extends State<NewClientStep2Screen> {
           ),
           const SizedBox(height: 16),
 
-          // Phone Number
-          _buildLabel(theme, 'Número de teléfono'),
+          // Address
+          _buildLabel(theme, 'Dirección'),
           TextFormField(
-            controller: entry.numberController,
-            keyboardType: TextInputType.phone,
+            controller: entry.addressController,
             decoration: InputDecoration(
-              hintText: 'Ej. 809-555-1234',
+              hintText: 'Calle, número, sector o barrio',
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              contentPadding: const EdgeInsets.all(16),
+            ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Este campo es obligatorio';
+              }
+              return null;
+            },
+          ),
+          const SizedBox(height: 16),
+
+          // City/Zone
+          _buildLabel(theme, 'Ciudad o zona'),
+          TextFormField(
+            controller: entry.cityController,
+            decoration: InputDecoration(
+              hintText: 'Ingresa la ciudad o zona',
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
