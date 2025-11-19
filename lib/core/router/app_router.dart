@@ -11,6 +11,7 @@ import 'package:sunnylon/features/home/presentation/today_route_screen.dart';
 import 'package:sunnylon/features/loans/presentation/existing_client_loan_form_screen.dart';
 import 'package:sunnylon/features/loans/presentation/loans_screen.dart';
 import 'package:sunnylon/features/loans/presentation/new_client/new_client_step1_screen.dart';
+import 'package:sunnylon/features/loans/presentation/new_client/new_client_step2_screen.dart';
 import 'package:sunnylon/features/loans/presentation/new_loan_type_screen.dart';
 import 'package:sunnylon/features/settings/presentation/settings_screen.dart';
 
@@ -86,6 +87,11 @@ final router = GoRouter(
               path: 'new-client-step1',
               name: 'new-client-step1',
               builder: (context, state) => const NewClientStep1Screen(),
+            ),
+            GoRoute(
+              path: 'new-client-step2',
+              name: 'new-client-step2',
+              builder: (context, state) => const NewClientStep2Screen(),
             ),
           ],
         ),

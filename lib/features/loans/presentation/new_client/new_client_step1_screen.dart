@@ -284,12 +284,7 @@ class _NewClientStep1ScreenState extends State<NewClientStep1Screen> {
                     text: 'Siguiente',
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        // TODO: Navigate to Step 2
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Validación exitosa - Ir al paso 2'),
-                          ),
-                        );
+                        context.pushNamed('new-client-step2');
                       }
                     },
                   ),
