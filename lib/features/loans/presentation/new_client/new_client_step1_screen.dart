@@ -75,10 +75,13 @@ class _NewClientStep1ScreenState extends State<NewClientStep1Screen> {
       appBar: AppBar(
         title: const Text('Datos del cliente'),
         centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.close),
-          onPressed: _showExitConfirmationDialog,
-        ),
+        automaticallyImplyLeading: false,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.close),
+            onPressed: _showExitConfirmationDialog,
+          ),
+        ],
       ),
       body: Column(
         children: [

@@ -59,6 +59,30 @@ class _NewClientStep3ScreenState extends State<NewClientStep3Screen> {
     });
   }
 
+  Future<void> _showExitConfirmationDialog() async {
+    final shouldExit = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('¿Salir del proceso?'),
+        content: const Text('Si sales ahora, perderás los datos ingresados.'),
+        actions: [
+          TextButton(
+            onPressed: () => context.pop(false),
+            child: const Text('Cancelar'),
+          ),
+          TextButton(
+            onPressed: () => context.pop(true),
+            child: const Text('Salir'),
+          ),
+        ],
+      ),
+    );
+
+    if (shouldExit == true && mounted) {
+      context.goNamed('loans');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -68,10 +92,13 @@ class _NewClientStep3ScreenState extends State<NewClientStep3Screen> {
       appBar: AppBar(
         title: const Text('Nuevo préstamo'),
         centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => context.pop(),
-        ),
+        automaticallyImplyLeading: false,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.close),
+            onPressed: _showExitConfirmationDialog,
+          ),
+        ],
       ),
       body: Column(
         children: [
