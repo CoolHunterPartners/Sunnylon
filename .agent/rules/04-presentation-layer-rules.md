@@ -3,6 +3,7 @@ trigger: glob
 globs: lib/**/presentation/**/*.dart
 ---
 
+
 # Presentation Layer Rules
 
 ## 1. Purpose of the Presentation Layer
@@ -136,10 +137,13 @@ class CustomersPage extends StatelessWidget {
     // ...
   }
 }
-5.2 Prefer Private Widgets
+```
+
+### 5.2 Prefer Private Widgets
 
 Split complex UI into private widget classes instead:
 
+```dart
 // ✅ Preferred pattern
 class CustomersPage extends StatelessWidget {
   const CustomersPage({super.key});
@@ -204,8 +208,9 @@ class _CustomerCard extends StatelessWidget {
     );
   }
 }
+```
 
-5.3 One Widget = One Responsibility
+### 5.3 One Widget = One Responsibility
 
 Each widget should have one clear responsibility.
 
@@ -213,7 +218,7 @@ If a widget grows too large, split it into smaller widgets.
 
 Prefer composition over inheritance or big monolithic widgets.
 
-5.4 Pure Widgets vs Connected Widgets
+### 5.4 Pure Widgets vs Connected Widgets
 
 Pure widgets:
 
@@ -231,7 +236,7 @@ Are responsible for wiring state to the UI.
 
 Try to keep them thin and delegate rendering to pure widgets.
 
-5.5 Shared vs Feature-Specific Widgets
+### 5.5 Shared vs Feature-Specific Widgets
 
 Create widgets in core/shared/widgets/ (or equivalent) when:
 
@@ -248,9 +253,6 @@ It is not reused across other modules.
 
 ---
 
-### 📄 Parte 2 — Presentation Layer Rules (secciones 6–9)
-
-```md
 ## 6. BLoC / State-Management Rules
 
 ### 6.1 Use Sealed Classes for States and Events
@@ -279,11 +281,13 @@ class CustomersError extends CustomersState {
   final String message;
   const CustomersError(this.message);
 }
+```
 
-6.2 Exhaustive Pattern Matching
+### 6.2 Exhaustive Pattern Matching
 
 Always handle all states in UI:
 
+```dart
 BlocBuilder<CustomersBloc, CustomersState>(
   builder: (context, state) {
     return switch (state) {
@@ -294,11 +298,13 @@ BlocBuilder<CustomersBloc, CustomersState>(
     };
   },
 );
+```
 
-6.3 Subscription Management
+### 6.3 Subscription Management
 
 BLoCs that subscribe to streams must cancel subscriptions in close():
 
+```dart
 class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
   final OrdersRepository _repository;
   StreamSubscription<List<Order>>? _subscription;
@@ -323,8 +329,9 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
     return super.close();
   }
 }
+```
 
-6.4 BLoC File Naming
+### 6.4 BLoC File Naming
 
 {feature}_bloc.dart – BLoC class.
 
@@ -338,8 +345,9 @@ Use separate files under presentation/blocs/{feature}, or
 
 Keep them in one file with part directives, as long as the structure is consistent.
 
-7. Sync & Offline-First in the UI
-7.1 Sync Status State Management
+## 7. Sync & Offline-First in the UI
+
+### 7.1 Sync Status State Management
 
 Have a dedicated sync status state manager (e.g. SyncStatusBloc).
 
@@ -351,7 +359,7 @@ Expose number of pending items in the outbox.
 
 Expose whether a sync is running.
 
-7.2 Sync Widgets
+### 7.2 Sync Widgets
 
 Common widgets for sync (examples):
 
@@ -363,7 +371,7 @@ sync_success_view – success feedback after a completed sync.
 
 These widgets should live in the shared widgets module and be reused across screens.
 
-7.3 Exposing Sync to the User
+### 7.3 Exposing Sync to the User
 
 The UI should:
 
@@ -373,10 +381,11 @@ Show when the last successful sync occurred.
 
 (Optionally) show how many items are pending.
 
-Provide a manual sync trigger when appropriate (e.g. “Sync now” button).
+Provide a manual sync trigger when appropriate (e.g. "Sync now" button).
 
-8. Naming & Location Conventions
-8.1 Screens / Pages
+## 8. Naming & Location Conventions
+
+### 8.1 Screens / Pages
 
 File name: {feature}_page.dart
 Examples: customers_list_page.dart, order_details_page.dart.
@@ -384,7 +393,7 @@ Examples: customers_list_page.dart, order_details_page.dart.
 Location:
 features/{feature}/presentation/pages/.
 
-8.2 Widgets
+### 8.2 Widgets
 
 File name: {name}_widget.dart or {name}.dart
 Examples: customer_card_widget.dart, order_summary_widget.dart.
@@ -395,14 +404,14 @@ features/{feature}/presentation/widgets/.
 Shared location:
 core/shared/widgets/.
 
-8.3 BLoCs / State Managers
+### 8.3 BLoCs / State Managers
 
 File names: {feature}_bloc.dart, {feature}_state.dart, {feature}_event.dart.
 
 Location:
 features/{feature}/presentation/blocs/ (or state/ if using another pattern).
 
-9. Checklist for New Features (Presentation Layer)
+## 9. Checklist for New Features (Presentation Layer)
 
 Before merging a feature that touches the presentation layer, verify:
 
@@ -422,4 +431,6 @@ Before merging a feature that touches the presentation layer, verify:
 
  Sync state (if applicable) is visible and understandable for the user.
 
-Presentation layer architecture rules — UI-focused, offline-first friendly, and reusable across Flutter projects.
+---
+
+*Presentation layer architecture rules — UI-focused, offline-first friendly, and reusable across Flutter projects.*

@@ -3,6 +3,7 @@ trigger: glob
 globs: lib/**/domain/**/*.dart
 ---
 
+
 # Domain Layer Rules
 
 ## 1. Purpose of the Domain Layer
