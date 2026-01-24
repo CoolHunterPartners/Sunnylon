@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sunnylon/core/shell/app_shell.dart';
+import 'package:sunnylon/core/router/shell/app_shell.dart';
 import 'package:sunnylon/features/auth/presentation/forgot_password/forgot_password_screen.dart';
 import 'package:sunnylon/features/auth/presentation/login/login_screen.dart';
 import 'package:sunnylon/features/clients/presentation/clients_screen.dart';
