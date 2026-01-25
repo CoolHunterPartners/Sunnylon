@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 import 'package:sunnylon/core/config/theme/sunnylon_theme.dart'
     as SunnylonTheme;
+import 'package:sunnylon/features/auth/domain/repositories/auth_repository.dart';
+import 'package:sunnylon/features/auth/presentation/blocs/auth/auth_bloc.dart';
+import 'package:sunnylon/features/auth/presentation/blocs/auth/auth_event.dart';
 
 import 'core/common/constants/app_constants.dart';
 import 'core/common/extensions/responsive/responsive_extensions.dart';
@@ -31,26 +35,28 @@ class _MyAppState extends State<MyApp> {
       builder: (context, orientation, deviceType) {
         return ChangeNotifierProvider.value(
           value: sl<AppRouterRefreshNotifier>(),
-          // child: MultiBlocProvider(
-          //   providers: [
-          //     // TODO: Add global Blocs here (e.g., AuthBloc, SyncStatusBloc)
-          //     // BlocProvider.value(value: sl<AuthBloc>()),
-          //   ],
-          child: MaterialApp.router(
-            title: AppConstants.appTitle,
-            debugShowCheckedModeBanner: false,
-            theme: SunnylonTheme.lightTheme,
-            // darkTheme: AppTheme.darkTheme, // Optional
-            locale: const Locale('es', 'ES'),
-            supportedLocales: const [Locale('es', 'ES'), Locale('en', 'US')],
-            localizationsDelegates: const [
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
+          child: MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) =>
+                    AuthBloc(sl<AuthRepository>())..add(CheckAuthStatus()),
+              ),
             ],
-            routerConfig: AppRouter.router,
+            child: MaterialApp.router(
+              title: AppConstants.appTitle,
+              debugShowCheckedModeBanner: false,
+              theme: SunnylonTheme.lightTheme,
+              // darkTheme: AppTheme.darkTheme, // Optional
+              locale: const Locale('es', 'ES'),
+              supportedLocales: const [Locale('es', 'ES'), Locale('en', 'US')],
+              localizationsDelegates: const [
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
+              routerConfig: AppRouter.router,
+            ),
           ),
-          // ),
         );
       },
     );

@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../features/auth/domain/use_cases/login_use_case.dart';
+import '../../../features/auth/presentation/blocs/login/login_bloc.dart';
 // Screens
 import '../../../features/auth/presentation/forgot_password/forgot_password_screen.dart';
 import '../../../features/auth/presentation/login/login_screen.dart';
-import '../../../features/clients/presentation/clients_screen.dart';
-import '../../../features/home/domain/collection_customer.dart';
-import '../../../features/home/presentation/collection_detail_screen.dart';
-import '../../../features/home/presentation/register_payment_screen.dart';
-import '../../../features/home/presentation/today_route_screen.dart';
 import '../../../features/loans/presentation/existing_client_loan_form_screen.dart';
 import '../../../features/loans/presentation/loans_screen.dart';
 import '../../../features/loans/presentation/new_client/new_client_step1_screen.dart';
@@ -17,61 +15,69 @@ import '../../../features/loans/presentation/new_client/new_client_step4_screen.
 import '../../../features/loans/presentation/new_client/new_client_step5_screen.dart';
 import '../../../features/loans/presentation/new_loan_type_screen.dart';
 import '../../../features/settings/presentation/settings_screen.dart';
+import '../../config/di/service_locator.dart';
 
 class PageFactory {
   /// Creates the login page
-  static Widget createLogin() {
-    return const LoginScreen();
+  static Widget createLoginPage() {
+    return BlocProvider(
+      create: (context) => LoginBloc(sl<LoginUseCase>()),
+      child: const LoginScreen(),
+    );
   }
 
   /// Creates the forgot password page
-  static Widget createForgotPassword() {
+  static Widget createForgotPasswordPage() {
     return const ForgotPasswordScreen();
   }
 
-  /// Creates the home page (Today Route)
-  static Widget createHome() {
-    return const TodayRouteScreen();
-  }
+  // /// Creates the home page
+  // static Widget createHomePage() {
+  //   return const HomeScreen();
+  // }
 
-  /// Creates clients page
-  static Widget createClients() {
-    return const ClientsScreen();
-  }
-
-  /// Creates loans page
-  static Widget createLoans() {
-    return const LoansScreen();
-  }
-
-  /// Creates settings page
-  static Widget createSettings() {
+  /// Creates the settings page
+  static Widget createSettingsPage() {
     return const SettingsScreen();
   }
 
-  /// Creates collection detail page
-  static Widget createCollectionDetail({required CollectionCustomer customer}) {
-    return CollectionDetailScreen(customer: customer);
+  /// Creates the loans page
+  static Widget createLoansPage() {
+    return const LoansScreen();
   }
 
-  /// Creates register payment page
-  static Widget createRegisterPayment({required CollectionCustomer customer}) {
-    return RegisterPaymentScreen(customer: customer);
+  /// Creates the new loan type selection page
+  static Widget createNewLoanTypePage() {
+    return const NewLoanTypeScreen();
   }
 
-  // Loans Wizard Pages
-  static Widget createNewClientStep1() => const NewClientStep1Screen();
-  static Widget createNewClientStep2() => const NewClientStep2Screen();
-  static Widget createNewClientStep3() => const NewClientStep3Screen();
-  static Widget createNewClientStep4() => const NewClientStep4Screen();
-  static Widget createNewClientStep5() => const NewClientStep5Screen();
+  /// Creates the existing client loan form page
+  static Widget createExistingClientLoanFormPage() {
+    return const ExistingClientLoanFormScreen();
+  }
 
-  // Loan Forms
-  static Widget createNewLoanType() => const NewLoanTypeScreen();
-  static Widget createNewLoanExisting() => const ExistingClientLoanFormScreen();
+  /// Creates the new client step 1 page
+  static Widget createNewClientStep1Page() {
+    return const NewClientStep1Screen();
+  }
 
-  /// Creates no network page (placeholder)
-  static Widget createNoNetwork() {
-    return const Scaffold(body: Center(child: Text('No Network Connection')));
+  /// Creates the new client step 2 page
+  static Widget createNewClientStep2Page() {
+    return const NewClientStep2Screen();
+  }
+
+  /// Creates the new client step 3 page
+  static Widget createNewClientStep3Page() {
+    return const NewClientStep3Screen();
+  }
+
+  /// Creates the new client step 4 page
+  static Widget createNewClientStep4Page() {
+    return const NewClientStep4Screen();
+  }
+
+  /// Creates the new client step 5 page
+  static Widget createNewClientStep5Page() {
+    return const NewClientStep5Screen();
   }
 }
