@@ -16,6 +16,7 @@ class _AddressEntry {
   final TextEditingController cityController;
 
   _AddressEntry({
+    // ignore: unused_element_parameter
     this.type = 'Principal',
     String? initialAddress,
     String? initialCity,

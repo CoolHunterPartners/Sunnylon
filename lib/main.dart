@@ -1,20 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:sunnylon/core/router/app_router.dart';
-import 'package:sunnylon/core/theme/sunnylon_theme.dart';
+import 'package:flutter/services.dart';
 
-void main() {
+import 'core/config/di/service_locator.dart' as di;
+import 'my_app.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // 🔒 Force portrait orientation
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
+
+  // 🌐 Load environment variables
+  // await dotenv.load(fileName: Environment.getEnvironmentFile());
+
+  // ✅ Validate configuration (optional check)
+  // Environment.validateConfig();
+
+  // 💾 Initialize Service Locator
+  await di.setUpServiceLocator();
+
   runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp.router(
-      title: 'Sunnylon',
-      theme: lightTheme,
-      routerConfig: router,
-    );
-  }
 }

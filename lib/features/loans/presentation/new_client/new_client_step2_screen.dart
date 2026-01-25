@@ -14,6 +14,7 @@ class _PhoneEntry {
   String type;
   final TextEditingController numberController;
 
+  // ignore: unused_element_parameter
   _PhoneEntry({this.type = 'Móvil'})
     : numberController = TextEditingController();
 
