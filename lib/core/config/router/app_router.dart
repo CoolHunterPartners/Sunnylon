@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../config/di/service_locator.dart';
-import '../../router/shell/app_shell.dart';
 import '../factories/page_factory.dart';
 import 'app_router_refresh_notifier.dart';
+import 'app_shell.dart';
 
 class AppRoute {
   static const home = (name: 'home', path: '/');
@@ -25,6 +25,9 @@ class AppRoute {
     name: 'existing-client-loan',
     path: '/loans/existing-client',
   );
+
+  // Clients
+  static const clients = (name: 'clients', path: '/clients');
 
   // Settings
   static const settings = (name: 'settings', path: '/settings');
@@ -76,6 +79,12 @@ class AppRouter {
             name: AppRoute.home.name,
             builder: (context, state) => PageFactory.createHomePage(),
           ),
+          //clients
+          GoRoute(
+            path: AppRoute.clients.path,
+            name: AppRoute.clients.name,
+            builder: (context, state) => PageFactory.createClientsPage(),
+          ),
 
           GoRoute(
             path: AppRoute.loans.path,
@@ -87,12 +96,12 @@ class AppRouter {
             name: AppRoute.newLoanType.name,
             builder: (context, state) => PageFactory.createNewLoanTypePage(),
           ),
-          GoRoute(
-            path: AppRoute.existingClientLoan.path,
-            name: AppRoute.existingClientLoan.name,
-            builder: (context, state) =>
-                PageFactory.createExistingClientLoanFormPage(),
-          ),
+          // GoRoute(
+          //   path: AppRoute.newClientLoan.path,
+          //   name: AppRoute.newClientLoan.name,
+          //   builder: (context, state) =>
+          //       PageFactory.createExistingClientLoanFormPage(),
+          // ),
           GoRoute(
             path: AppRoute.newClientLoan.path,
             name: AppRoute.newClientLoan.name,

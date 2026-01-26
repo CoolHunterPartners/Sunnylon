@@ -1,7 +1,6 @@
 import 'package:drift/drift.dart';
 
 class UsersProfileTable extends Table {
-  TextColumn get profileId => text().withLength(max: 50)();
   TextColumn get userId => text().withLength(max: 450)(); // Unique
   TextColumn get firstName => text().withLength(max: 50)();
   TextColumn get lastName => text().withLength(max: 50)();
@@ -12,7 +11,7 @@ class UsersProfileTable extends Table {
   BoolColumn get isCurrent => boolean().withDefault(const Constant(false))();
 
   @override
-  Set<Column> get primaryKey => {profileId};
+  Set<Column> get primaryKey => {userId};
 
   @override
   List<String> get customConstraints => ['UNIQUE (user_id)', 'UNIQUE (email)'];

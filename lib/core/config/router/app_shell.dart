@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sunnylon/core/config/router/app_navigator.dart';
 
 class AppShell extends StatelessWidget {
   const AppShell({super.key, required this.child});
@@ -61,16 +62,16 @@ class AppShell extends StatelessWidget {
   void _onItemTapped(int index, BuildContext context) {
     switch (index) {
       case 0:
-        GoRouter.of(context).go('/');
+        AppNavigator.goToHome(context);
         break;
       case 1:
-        GoRouter.of(context).go('/clients');
+        AppNavigator.goToClients(context);
         break;
       case 2:
-        GoRouter.of(context).go('/loans');
+        AppNavigator.goToLoans(context);
         break;
       case 3:
-        GoRouter.of(context).go('/settings');
+        AppNavigator.goToSettings(context);
         break;
     }
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sunnylon/features/clients/presentation/clients_screen.dart';
 import 'package:sunnylon/features/home/presentation/today_route_screen.dart';
 
 import '../../../features/auth/domain/use_cases/login_use_case.dart';
@@ -35,6 +36,11 @@ class PageFactory {
   /// Creates the home page
   static Widget createHomePage() {
     return const TodayRouteScreen();
+  }
+
+  /// Creates the clients page
+  static Widget createClientsPage() {
+    return const ClientsScreen();
   }
 
   /// Creates the settings page

@@ -11457,18 +11457,6 @@ class $UsersProfileTableTable extends UsersProfileTable
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
   $UsersProfileTableTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _profileIdMeta = const VerificationMeta(
-    'profileId',
-  );
-  @override
-  late final GeneratedColumn<String> profileId = GeneratedColumn<String>(
-    'profile_id',
-    aliasedName,
-    false,
-    additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 50),
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
   static const VerificationMeta _userIdMeta = const VerificationMeta('userId');
   @override
   late final GeneratedColumn<String> userId = GeneratedColumn<String>(
@@ -11567,7 +11555,6 @@ class $UsersProfileTableTable extends UsersProfileTable
   );
   @override
   List<GeneratedColumn> get $columns => [
-    profileId,
     userId,
     firstName,
     lastName,
@@ -11589,14 +11576,6 @@ class $UsersProfileTableTable extends UsersProfileTable
   }) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
-    if (data.containsKey('profile_id')) {
-      context.handle(
-        _profileIdMeta,
-        profileId.isAcceptableOrUnknown(data['profile_id']!, _profileIdMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_profileIdMeta);
-    }
     if (data.containsKey('user_id')) {
       context.handle(
         _userIdMeta,
@@ -11662,15 +11641,11 @@ class $UsersProfileTableTable extends UsersProfileTable
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => {profileId};
+  Set<GeneratedColumn> get $primaryKey => {userId};
   @override
   UsersProfileTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return UsersProfileTableData(
-      profileId: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}profile_id'],
-      )!,
       userId: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}user_id'],
@@ -11714,7 +11689,6 @@ class $UsersProfileTableTable extends UsersProfileTable
 
 class UsersProfileTableData extends DataClass
     implements Insertable<UsersProfileTableData> {
-  final String profileId;
   final String userId;
   final String firstName;
   final String lastName;
@@ -11724,7 +11698,6 @@ class UsersProfileTableData extends DataClass
   final DateTime createdDate;
   final bool isCurrent;
   const UsersProfileTableData({
-    required this.profileId,
     required this.userId,
     required this.firstName,
     required this.lastName,
@@ -11737,7 +11710,6 @@ class UsersProfileTableData extends DataClass
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    map['profile_id'] = Variable<String>(profileId);
     map['user_id'] = Variable<String>(userId);
     map['first_name'] = Variable<String>(firstName);
     map['last_name'] = Variable<String>(lastName);
@@ -11751,7 +11723,6 @@ class UsersProfileTableData extends DataClass
 
   UsersProfileTableCompanion toCompanion(bool nullToAbsent) {
     return UsersProfileTableCompanion(
-      profileId: Value(profileId),
       userId: Value(userId),
       firstName: Value(firstName),
       lastName: Value(lastName),
@@ -11769,7 +11740,6 @@ class UsersProfileTableData extends DataClass
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return UsersProfileTableData(
-      profileId: serializer.fromJson<String>(json['profileId']),
       userId: serializer.fromJson<String>(json['userId']),
       firstName: serializer.fromJson<String>(json['firstName']),
       lastName: serializer.fromJson<String>(json['lastName']),
@@ -11784,7 +11754,6 @@ class UsersProfileTableData extends DataClass
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
-      'profileId': serializer.toJson<String>(profileId),
       'userId': serializer.toJson<String>(userId),
       'firstName': serializer.toJson<String>(firstName),
       'lastName': serializer.toJson<String>(lastName),
@@ -11797,7 +11766,6 @@ class UsersProfileTableData extends DataClass
   }
 
   UsersProfileTableData copyWith({
-    String? profileId,
     String? userId,
     String? firstName,
     String? lastName,
@@ -11807,7 +11775,6 @@ class UsersProfileTableData extends DataClass
     DateTime? createdDate,
     bool? isCurrent,
   }) => UsersProfileTableData(
-    profileId: profileId ?? this.profileId,
     userId: userId ?? this.userId,
     firstName: firstName ?? this.firstName,
     lastName: lastName ?? this.lastName,
@@ -11819,7 +11786,6 @@ class UsersProfileTableData extends DataClass
   );
   UsersProfileTableData copyWithCompanion(UsersProfileTableCompanion data) {
     return UsersProfileTableData(
-      profileId: data.profileId.present ? data.profileId.value : this.profileId,
       userId: data.userId.present ? data.userId.value : this.userId,
       firstName: data.firstName.present ? data.firstName.value : this.firstName,
       lastName: data.lastName.present ? data.lastName.value : this.lastName,
@@ -11836,7 +11802,6 @@ class UsersProfileTableData extends DataClass
   @override
   String toString() {
     return (StringBuffer('UsersProfileTableData(')
-          ..write('profileId: $profileId, ')
           ..write('userId: $userId, ')
           ..write('firstName: $firstName, ')
           ..write('lastName: $lastName, ')
@@ -11851,7 +11816,6 @@ class UsersProfileTableData extends DataClass
 
   @override
   int get hashCode => Object.hash(
-    profileId,
     userId,
     firstName,
     lastName,
@@ -11865,7 +11829,6 @@ class UsersProfileTableData extends DataClass
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is UsersProfileTableData &&
-          other.profileId == this.profileId &&
           other.userId == this.userId &&
           other.firstName == this.firstName &&
           other.lastName == this.lastName &&
@@ -11878,7 +11841,6 @@ class UsersProfileTableData extends DataClass
 
 class UsersProfileTableCompanion
     extends UpdateCompanion<UsersProfileTableData> {
-  final Value<String> profileId;
   final Value<String> userId;
   final Value<String> firstName;
   final Value<String> lastName;
@@ -11889,7 +11851,6 @@ class UsersProfileTableCompanion
   final Value<bool> isCurrent;
   final Value<int> rowid;
   const UsersProfileTableCompanion({
-    this.profileId = const Value.absent(),
     this.userId = const Value.absent(),
     this.firstName = const Value.absent(),
     this.lastName = const Value.absent(),
@@ -11901,7 +11862,6 @@ class UsersProfileTableCompanion
     this.rowid = const Value.absent(),
   });
   UsersProfileTableCompanion.insert({
-    required String profileId,
     required String userId,
     required String firstName,
     required String lastName,
@@ -11911,14 +11871,12 @@ class UsersProfileTableCompanion
     this.createdDate = const Value.absent(),
     this.isCurrent = const Value.absent(),
     this.rowid = const Value.absent(),
-  }) : profileId = Value(profileId),
-       userId = Value(userId),
+  }) : userId = Value(userId),
        firstName = Value(firstName),
        lastName = Value(lastName),
        email = Value(email),
        phone = Value(phone);
   static Insertable<UsersProfileTableData> custom({
-    Expression<String>? profileId,
     Expression<String>? userId,
     Expression<String>? firstName,
     Expression<String>? lastName,
@@ -11930,7 +11888,6 @@ class UsersProfileTableCompanion
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
-      if (profileId != null) 'profile_id': profileId,
       if (userId != null) 'user_id': userId,
       if (firstName != null) 'first_name': firstName,
       if (lastName != null) 'last_name': lastName,
@@ -11944,7 +11901,6 @@ class UsersProfileTableCompanion
   }
 
   UsersProfileTableCompanion copyWith({
-    Value<String>? profileId,
     Value<String>? userId,
     Value<String>? firstName,
     Value<String>? lastName,
@@ -11956,7 +11912,6 @@ class UsersProfileTableCompanion
     Value<int>? rowid,
   }) {
     return UsersProfileTableCompanion(
-      profileId: profileId ?? this.profileId,
       userId: userId ?? this.userId,
       firstName: firstName ?? this.firstName,
       lastName: lastName ?? this.lastName,
@@ -11972,9 +11927,6 @@ class UsersProfileTableCompanion
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    if (profileId.present) {
-      map['profile_id'] = Variable<String>(profileId.value);
-    }
     if (userId.present) {
       map['user_id'] = Variable<String>(userId.value);
     }
@@ -12008,7 +11960,6 @@ class UsersProfileTableCompanion
   @override
   String toString() {
     return (StringBuffer('UsersProfileTableCompanion(')
-          ..write('profileId: $profileId, ')
           ..write('userId: $userId, ')
           ..write('firstName: $firstName, ')
           ..write('lastName: $lastName, ')
@@ -17790,7 +17741,6 @@ typedef $$GenderTableTableProcessedTableManager =
     >;
 typedef $$UsersProfileTableTableCreateCompanionBuilder =
     UsersProfileTableCompanion Function({
-      required String profileId,
       required String userId,
       required String firstName,
       required String lastName,
@@ -17803,7 +17753,6 @@ typedef $$UsersProfileTableTableCreateCompanionBuilder =
     });
 typedef $$UsersProfileTableTableUpdateCompanionBuilder =
     UsersProfileTableCompanion Function({
-      Value<String> profileId,
       Value<String> userId,
       Value<String> firstName,
       Value<String> lastName,
@@ -17824,11 +17773,6 @@ class $$UsersProfileTableTableFilterComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  ColumnFilters<String> get profileId => $composableBuilder(
-    column: $table.profileId,
-    builder: (column) => ColumnFilters(column),
-  );
-
   ColumnFilters<String> get userId => $composableBuilder(
     column: $table.userId,
     builder: (column) => ColumnFilters(column),
@@ -17879,11 +17823,6 @@ class $$UsersProfileTableTableOrderingComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  ColumnOrderings<String> get profileId => $composableBuilder(
-    column: $table.profileId,
-    builder: (column) => ColumnOrderings(column),
-  );
-
   ColumnOrderings<String> get userId => $composableBuilder(
     column: $table.userId,
     builder: (column) => ColumnOrderings(column),
@@ -17934,9 +17873,6 @@ class $$UsersProfileTableTableAnnotationComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  GeneratedColumn<String> get profileId =>
-      $composableBuilder(column: $table.profileId, builder: (column) => column);
-
   GeneratedColumn<String> get userId =>
       $composableBuilder(column: $table.userId, builder: (column) => column);
 
@@ -18004,7 +17940,6 @@ class $$UsersProfileTableTableTableManager
               ),
           updateCompanionCallback:
               ({
-                Value<String> profileId = const Value.absent(),
                 Value<String> userId = const Value.absent(),
                 Value<String> firstName = const Value.absent(),
                 Value<String> lastName = const Value.absent(),
@@ -18015,7 +17950,6 @@ class $$UsersProfileTableTableTableManager
                 Value<bool> isCurrent = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => UsersProfileTableCompanion(
-                profileId: profileId,
                 userId: userId,
                 firstName: firstName,
                 lastName: lastName,
@@ -18028,7 +17962,6 @@ class $$UsersProfileTableTableTableManager
               ),
           createCompanionCallback:
               ({
-                required String profileId,
                 required String userId,
                 required String firstName,
                 required String lastName,
@@ -18039,7 +17972,6 @@ class $$UsersProfileTableTableTableManager
                 Value<bool> isCurrent = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => UsersProfileTableCompanion.insert(
-                profileId: profileId,
                 userId: userId,
                 firstName: firstName,
                 lastName: lastName,

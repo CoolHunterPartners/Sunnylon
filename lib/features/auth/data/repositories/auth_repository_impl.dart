@@ -71,8 +71,7 @@ class AuthRepositoryImpl implements AuthRepository {
       // Save to local (DAO handles isCurrent = true logic)
       await _localDataSource.saveProfile(profileCompanion);
 
-      // Retrieve the saved profile from local to ensures we have the generated profileId
-      // and consistent data.
+      // Retrieve the saved profile from local to ensure consistent data.
       final localProfile = await _localDataSource.getProfile();
 
       if (localProfile == null) {
