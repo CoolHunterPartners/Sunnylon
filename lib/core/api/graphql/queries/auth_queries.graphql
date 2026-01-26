@@ -5,3 +5,14 @@ query RefreshToken($oldRefreshToken: String!) {
     expirationDate
   }
 }
+
+query Profile {
+  profile {
+    userId
+    email
+    firstName
+    lastName
+    phone
+    userName
+  }
+}

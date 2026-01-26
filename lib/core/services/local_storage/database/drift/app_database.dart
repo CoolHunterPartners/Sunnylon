@@ -5,8 +5,8 @@ import 'package:drift/native.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
+import '../../../../../../features/auth/data/data_sources/daos/users_profile_dao.dart';
 import 'tables/address_table.dart';
-import 'tables/asp_net_users_profile_table.dart';
 import 'tables/bank_account_table.dart';
 import 'tables/client_address_table.dart';
 import 'tables/client_contact_table.dart';
@@ -27,6 +27,7 @@ import 'tables/loan_type_table.dart';
 import 'tables/membership_table.dart';
 import 'tables/payments_table.dart';
 import 'tables/provinces_table.dart';
+import 'tables/users_profile_table.dart';
 
 part 'app_database.g.dart';
 
@@ -59,8 +60,10 @@ part 'app_database.g.dart';
     MembershipTable,
     ProvincesTable,
     GenderTable,
-    AspNetUsersProfileTable,
+    GenderTable,
+    UsersProfileTable,
   ],
+  daos: [UsersProfileDao],
 )
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());

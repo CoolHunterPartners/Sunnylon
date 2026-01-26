@@ -1,15 +1,18 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get_it/get_it.dart';
+import 'package:sunnylon/features/auth/domain/use_cases/login_use_case.dart';
 import 'package:sunnylon/features/auth/presentation/blocs/auth/auth_bloc.dart';
 import 'package:sunnylon/features/auth/presentation/blocs/login/login_bloc.dart';
 
+import '../../../features/auth/data/data_sources/auth_local_data_source.dart';
 import '../../../features/auth/data/data_sources/auth_remote_data_source.dart';
+import '../../../features/auth/data/data_sources/daos/users_profile_dao.dart';
 import '../../../features/auth/data/repositories/auth_repository_impl.dart';
 import '../../../features/auth/domain/repositories/auth_repository.dart';
-import '../../../features/auth/domain/use_cases/login_use_case.dart';
 import '../../services/device/device_info_service.dart';
 import '../../services/graphql/graphql_service.dart';
 import '../../services/graphql/graphql_service_impl.dart';
+import '../../services/local_storage/database/drift/app_database.dart';
 import '../../services/local_storage/token_store_contract.dart';
 import '../../services/network/network_info.dart';
 import '../router/app_router_refresh_notifier.dart';
@@ -25,6 +28,8 @@ Future<void> setUpServiceLocator() async {
 
   sl.registerLazySingleton<Connectivity>(() => Connectivity());
 
+  sl.registerLazySingleton<AppDatabase>(() => AppDatabase());
+
   sl.registerLazySingleton<TokenStoreService>(() => SecureStorageTokenStore());
 
   sl.registerLazySingleton<GraphQLService>(
@@ -35,11 +40,20 @@ Future<void> setUpServiceLocator() async {
   sl.registerLazySingleton<AuthRemoteDataSource>(
     () => AuthRemoteDataSourceImpl(sl<GraphQLService>()),
   );
+  sl.registerLazySingleton<UsersProfileDao>(
+    () => UsersProfileDao(sl<AppDatabase>()),
+  );
+  sl.registerLazySingleton<AuthLocalDataSource>(
+    () => AuthLocalDataSourceImpl(sl<UsersProfileDao>()),
+  );
 
   //! Repositories
   sl.registerLazySingleton<AuthRepository>(
-    () =>
-        AuthRepositoryImpl(sl<AuthRemoteDataSource>(), sl<TokenStoreService>()),
+    () => AuthRepositoryImpl(
+      sl<AuthRemoteDataSource>(),
+      sl<AuthLocalDataSource>(),
+      sl<TokenStoreService>(),
+    ),
   );
 
   //! Use Cases

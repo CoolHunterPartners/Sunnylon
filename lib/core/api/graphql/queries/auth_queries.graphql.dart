@@ -580,3 +580,527 @@ class _CopyWithStubImpl$Query$RefreshToken$refreshToken<TRes>
     String? $__typename,
   }) => _res;
 }
+
+class Query$Profile {
+  Query$Profile({this.profile, this.$__typename = 'Query'});
+
+  factory Query$Profile.fromJson(Map<String, dynamic> json) {
+    final l$profile = json['profile'];
+    final l$$__typename = json['__typename'];
+    return Query$Profile(
+      profile: l$profile == null
+          ? null
+          : Query$Profile$profile.fromJson((l$profile as Map<String, dynamic>)),
+      $__typename: (l$$__typename as String),
+    );
+  }
+
+  final Query$Profile$profile? profile;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$profile = profile;
+    _resultData['profile'] = l$profile?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$profile = profile;
+    final l$$__typename = $__typename;
+    return Object.hashAll([l$profile, l$$__typename]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (other is! Query$Profile || runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$profile = profile;
+    final lOther$profile = other.profile;
+    if (l$profile != lOther$profile) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$Profile on Query$Profile {
+  CopyWith$Query$Profile<Query$Profile> get copyWith =>
+      CopyWith$Query$Profile(this, (i) => i);
+}
+
+abstract class CopyWith$Query$Profile<TRes> {
+  factory CopyWith$Query$Profile(
+    Query$Profile instance,
+    TRes Function(Query$Profile) then,
+  ) = _CopyWithImpl$Query$Profile;
+
+  factory CopyWith$Query$Profile.stub(TRes res) =
+      _CopyWithStubImpl$Query$Profile;
+
+  TRes call({Query$Profile$profile? profile, String? $__typename});
+  CopyWith$Query$Profile$profile<TRes> get profile;
+}
+
+class _CopyWithImpl$Query$Profile<TRes>
+    implements CopyWith$Query$Profile<TRes> {
+  _CopyWithImpl$Query$Profile(this._instance, this._then);
+
+  final Query$Profile _instance;
+
+  final TRes Function(Query$Profile) _then;
+
+  static const _undefined = <dynamic, dynamic>{};
+
+  TRes call({Object? profile = _undefined, Object? $__typename = _undefined}) =>
+      _then(
+        Query$Profile(
+          profile: profile == _undefined
+              ? _instance.profile
+              : (profile as Query$Profile$profile?),
+          $__typename: $__typename == _undefined || $__typename == null
+              ? _instance.$__typename
+              : ($__typename as String),
+        ),
+      );
+
+  CopyWith$Query$Profile$profile<TRes> get profile {
+    final local$profile = _instance.profile;
+    return local$profile == null
+        ? CopyWith$Query$Profile$profile.stub(_then(_instance))
+        : CopyWith$Query$Profile$profile(
+            local$profile,
+            (e) => call(profile: e),
+          );
+  }
+}
+
+class _CopyWithStubImpl$Query$Profile<TRes>
+    implements CopyWith$Query$Profile<TRes> {
+  _CopyWithStubImpl$Query$Profile(this._res);
+
+  TRes _res;
+
+  call({Query$Profile$profile? profile, String? $__typename}) => _res;
+
+  CopyWith$Query$Profile$profile<TRes> get profile =>
+      CopyWith$Query$Profile$profile.stub(_res);
+}
+
+const documentNodeQueryProfile = DocumentNode(
+  definitions: [
+    OperationDefinitionNode(
+      type: OperationType.query,
+      name: NameNode(value: 'Profile'),
+      variableDefinitions: [],
+      directives: [],
+      selectionSet: SelectionSetNode(
+        selections: [
+          FieldNode(
+            name: NameNode(value: 'profile'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(
+              selections: [
+                FieldNode(
+                  name: NameNode(value: 'userId'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null,
+                ),
+                FieldNode(
+                  name: NameNode(value: 'email'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null,
+                ),
+                FieldNode(
+                  name: NameNode(value: 'firstName'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null,
+                ),
+                FieldNode(
+                  name: NameNode(value: 'lastName'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null,
+                ),
+                FieldNode(
+                  name: NameNode(value: 'phone'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null,
+                ),
+                FieldNode(
+                  name: NameNode(value: 'userName'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null,
+                ),
+                FieldNode(
+                  name: NameNode(value: '__typename'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null,
+                ),
+              ],
+            ),
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ],
+      ),
+    ),
+  ],
+);
+Query$Profile _parserFn$Query$Profile(Map<String, dynamic> data) =>
+    Query$Profile.fromJson(data);
+typedef OnQueryComplete$Query$Profile =
+    FutureOr<void> Function(Map<String, dynamic>?, Query$Profile?);
+
+class Options$Query$Profile extends graphql.QueryOptions<Query$Profile> {
+  Options$Query$Profile({
+    String? operationName,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Query$Profile? typedOptimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+    OnQueryComplete$Query$Profile? onComplete,
+    graphql.OnQueryError? onError,
+  }) : onCompleteWithParsed = onComplete,
+       super(
+         operationName: operationName,
+         fetchPolicy: fetchPolicy,
+         errorPolicy: errorPolicy,
+         cacheRereadPolicy: cacheRereadPolicy,
+         optimisticResult: optimisticResult ?? typedOptimisticResult?.toJson(),
+         pollInterval: pollInterval,
+         context: context,
+         onComplete: onComplete == null
+             ? null
+             : (data) => onComplete(
+                 data,
+                 data == null ? null : _parserFn$Query$Profile(data),
+               ),
+         onError: onError,
+         document: documentNodeQueryProfile,
+         parserFn: _parserFn$Query$Profile,
+       );
+
+  final OnQueryComplete$Query$Profile? onCompleteWithParsed;
+
+  @override
+  List<Object?> get properties => [
+    ...super.onComplete == null
+        ? super.properties
+        : super.properties.where((property) => property != onComplete),
+    onCompleteWithParsed,
+  ];
+}
+
+class WatchOptions$Query$Profile
+    extends graphql.WatchQueryOptions<Query$Profile> {
+  WatchOptions$Query$Profile({
+    String? operationName,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Query$Profile? typedOptimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+         operationName: operationName,
+         fetchPolicy: fetchPolicy,
+         errorPolicy: errorPolicy,
+         cacheRereadPolicy: cacheRereadPolicy,
+         optimisticResult: optimisticResult ?? typedOptimisticResult?.toJson(),
+         context: context,
+         document: documentNodeQueryProfile,
+         pollInterval: pollInterval,
+         eagerlyFetchResults: eagerlyFetchResults,
+         carryForwardDataOnException: carryForwardDataOnException,
+         fetchResults: fetchResults,
+         parserFn: _parserFn$Query$Profile,
+       );
+}
+
+class FetchMoreOptions$Query$Profile extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$Profile({required graphql.UpdateQuery updateQuery})
+    : super(updateQuery: updateQuery, document: documentNodeQueryProfile);
+}
+
+extension ClientExtension$Query$Profile on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$Profile>> query$Profile([
+    Options$Query$Profile? options,
+  ]) async => await this.query(options ?? Options$Query$Profile());
+
+  graphql.ObservableQuery<Query$Profile> watchQuery$Profile([
+    WatchOptions$Query$Profile? options,
+  ]) => this.watchQuery(options ?? WatchOptions$Query$Profile());
+
+  void writeQuery$Profile({
+    required Query$Profile data,
+    bool broadcast = true,
+  }) => this.writeQuery(
+    graphql.Request(
+      operation: graphql.Operation(document: documentNodeQueryProfile),
+    ),
+    data: data.toJson(),
+    broadcast: broadcast,
+  );
+
+  Query$Profile? readQuery$Profile({bool optimistic = true}) {
+    final result = this.readQuery(
+      graphql.Request(
+        operation: graphql.Operation(document: documentNodeQueryProfile),
+      ),
+      optimistic: optimistic,
+    );
+    return result == null ? null : Query$Profile.fromJson(result);
+  }
+}
+
+class Query$Profile$profile {
+  Query$Profile$profile({
+    this.userId,
+    this.email,
+    this.firstName,
+    this.lastName,
+    this.phone,
+    this.userName,
+    this.$__typename = 'Profile',
+  });
+
+  factory Query$Profile$profile.fromJson(Map<String, dynamic> json) {
+    final l$userId = json['userId'];
+    final l$email = json['email'];
+    final l$firstName = json['firstName'];
+    final l$lastName = json['lastName'];
+    final l$phone = json['phone'];
+    final l$userName = json['userName'];
+    final l$$__typename = json['__typename'];
+    return Query$Profile$profile(
+      userId: (l$userId as String?),
+      email: (l$email as String?),
+      firstName: (l$firstName as String?),
+      lastName: (l$lastName as String?),
+      phone: (l$phone as String?),
+      userName: (l$userName as String?),
+      $__typename: (l$$__typename as String),
+    );
+  }
+
+  final String? userId;
+
+  final String? email;
+
+  final String? firstName;
+
+  final String? lastName;
+
+  final String? phone;
+
+  final String? userName;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$userId = userId;
+    _resultData['userId'] = l$userId;
+    final l$email = email;
+    _resultData['email'] = l$email;
+    final l$firstName = firstName;
+    _resultData['firstName'] = l$firstName;
+    final l$lastName = lastName;
+    _resultData['lastName'] = l$lastName;
+    final l$phone = phone;
+    _resultData['phone'] = l$phone;
+    final l$userName = userName;
+    _resultData['userName'] = l$userName;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$userId = userId;
+    final l$email = email;
+    final l$firstName = firstName;
+    final l$lastName = lastName;
+    final l$phone = phone;
+    final l$userName = userName;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$userId,
+      l$email,
+      l$firstName,
+      l$lastName,
+      l$phone,
+      l$userName,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (other is! Query$Profile$profile || runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$userId = userId;
+    final lOther$userId = other.userId;
+    if (l$userId != lOther$userId) {
+      return false;
+    }
+    final l$email = email;
+    final lOther$email = other.email;
+    if (l$email != lOther$email) {
+      return false;
+    }
+    final l$firstName = firstName;
+    final lOther$firstName = other.firstName;
+    if (l$firstName != lOther$firstName) {
+      return false;
+    }
+    final l$lastName = lastName;
+    final lOther$lastName = other.lastName;
+    if (l$lastName != lOther$lastName) {
+      return false;
+    }
+    final l$phone = phone;
+    final lOther$phone = other.phone;
+    if (l$phone != lOther$phone) {
+      return false;
+    }
+    final l$userName = userName;
+    final lOther$userName = other.userName;
+    if (l$userName != lOther$userName) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$Profile$profile on Query$Profile$profile {
+  CopyWith$Query$Profile$profile<Query$Profile$profile> get copyWith =>
+      CopyWith$Query$Profile$profile(this, (i) => i);
+}
+
+abstract class CopyWith$Query$Profile$profile<TRes> {
+  factory CopyWith$Query$Profile$profile(
+    Query$Profile$profile instance,
+    TRes Function(Query$Profile$profile) then,
+  ) = _CopyWithImpl$Query$Profile$profile;
+
+  factory CopyWith$Query$Profile$profile.stub(TRes res) =
+      _CopyWithStubImpl$Query$Profile$profile;
+
+  TRes call({
+    String? userId,
+    String? email,
+    String? firstName,
+    String? lastName,
+    String? phone,
+    String? userName,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$Profile$profile<TRes>
+    implements CopyWith$Query$Profile$profile<TRes> {
+  _CopyWithImpl$Query$Profile$profile(this._instance, this._then);
+
+  final Query$Profile$profile _instance;
+
+  final TRes Function(Query$Profile$profile) _then;
+
+  static const _undefined = <dynamic, dynamic>{};
+
+  TRes call({
+    Object? userId = _undefined,
+    Object? email = _undefined,
+    Object? firstName = _undefined,
+    Object? lastName = _undefined,
+    Object? phone = _undefined,
+    Object? userName = _undefined,
+    Object? $__typename = _undefined,
+  }) => _then(
+    Query$Profile$profile(
+      userId: userId == _undefined ? _instance.userId : (userId as String?),
+      email: email == _undefined ? _instance.email : (email as String?),
+      firstName: firstName == _undefined
+          ? _instance.firstName
+          : (firstName as String?),
+      lastName: lastName == _undefined
+          ? _instance.lastName
+          : (lastName as String?),
+      phone: phone == _undefined ? _instance.phone : (phone as String?),
+      userName: userName == _undefined
+          ? _instance.userName
+          : (userName as String?),
+      $__typename: $__typename == _undefined || $__typename == null
+          ? _instance.$__typename
+          : ($__typename as String),
+    ),
+  );
+}
+
+class _CopyWithStubImpl$Query$Profile$profile<TRes>
+    implements CopyWith$Query$Profile$profile<TRes> {
+  _CopyWithStubImpl$Query$Profile$profile(this._res);
+
+  TRes _res;
+
+  call({
+    String? userId,
+    String? email,
+    String? firstName,
+    String? lastName,
+    String? phone,
+    String? userName,
+    String? $__typename,
+  }) => _res;
+}

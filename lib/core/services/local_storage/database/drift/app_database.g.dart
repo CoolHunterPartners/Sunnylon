@@ -11451,12 +11451,12 @@ class GenderTableCompanion extends UpdateCompanion<GenderTableData> {
   }
 }
 
-class $AspNetUsersProfileTableTable extends AspNetUsersProfileTable
-    with TableInfo<$AspNetUsersProfileTableTable, AspNetUsersProfileTableData> {
+class $UsersProfileTableTable extends UsersProfileTable
+    with TableInfo<$UsersProfileTableTable, UsersProfileTableData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $AspNetUsersProfileTableTable(this.attachedDatabase, [this._alias]);
+  $UsersProfileTableTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _profileIdMeta = const VerificationMeta(
     'profileId',
   );
@@ -11550,6 +11550,21 @@ class $AspNetUsersProfileTableTable extends AspNetUsersProfileTable
     requiredDuringInsert: false,
     defaultValue: currentDate,
   );
+  static const VerificationMeta _isCurrentMeta = const VerificationMeta(
+    'isCurrent',
+  );
+  @override
+  late final GeneratedColumn<bool> isCurrent = GeneratedColumn<bool>(
+    'is_current',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_current" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
   @override
   List<GeneratedColumn> get $columns => [
     profileId,
@@ -11560,15 +11575,16 @@ class $AspNetUsersProfileTableTable extends AspNetUsersProfileTable
     phone,
     isActive,
     createdDate,
+    isCurrent,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'asp_net_users_profile_table';
+  static const String $name = 'users_profile_table';
   @override
   VerificationContext validateIntegrity(
-    Insertable<AspNetUsersProfileTableData> instance, {
+    Insertable<UsersProfileTableData> instance, {
     bool isInserting = false,
   }) {
     final context = VerificationContext();
@@ -11636,18 +11652,21 @@ class $AspNetUsersProfileTableTable extends AspNetUsersProfileTable
         ),
       );
     }
+    if (data.containsKey('is_current')) {
+      context.handle(
+        _isCurrentMeta,
+        isCurrent.isAcceptableOrUnknown(data['is_current']!, _isCurrentMeta),
+      );
+    }
     return context;
   }
 
   @override
   Set<GeneratedColumn> get $primaryKey => {profileId};
   @override
-  AspNetUsersProfileTableData map(
-    Map<String, dynamic> data, {
-    String? tablePrefix,
-  }) {
+  UsersProfileTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return AspNetUsersProfileTableData(
+    return UsersProfileTableData(
       profileId: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}profile_id'],
@@ -11680,17 +11699,21 @@ class $AspNetUsersProfileTableTable extends AspNetUsersProfileTable
         DriftSqlType.dateTime,
         data['${effectivePrefix}created_date'],
       )!,
+      isCurrent: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_current'],
+      )!,
     );
   }
 
   @override
-  $AspNetUsersProfileTableTable createAlias(String alias) {
-    return $AspNetUsersProfileTableTable(attachedDatabase, alias);
+  $UsersProfileTableTable createAlias(String alias) {
+    return $UsersProfileTableTable(attachedDatabase, alias);
   }
 }
 
-class AspNetUsersProfileTableData extends DataClass
-    implements Insertable<AspNetUsersProfileTableData> {
+class UsersProfileTableData extends DataClass
+    implements Insertable<UsersProfileTableData> {
   final String profileId;
   final String userId;
   final String firstName;
@@ -11699,7 +11722,8 @@ class AspNetUsersProfileTableData extends DataClass
   final String phone;
   final bool isActive;
   final DateTime createdDate;
-  const AspNetUsersProfileTableData({
+  final bool isCurrent;
+  const UsersProfileTableData({
     required this.profileId,
     required this.userId,
     required this.firstName,
@@ -11708,6 +11732,7 @@ class AspNetUsersProfileTableData extends DataClass
     required this.phone,
     required this.isActive,
     required this.createdDate,
+    required this.isCurrent,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -11720,11 +11745,12 @@ class AspNetUsersProfileTableData extends DataClass
     map['phone'] = Variable<String>(phone);
     map['is_active'] = Variable<bool>(isActive);
     map['created_date'] = Variable<DateTime>(createdDate);
+    map['is_current'] = Variable<bool>(isCurrent);
     return map;
   }
 
-  AspNetUsersProfileTableCompanion toCompanion(bool nullToAbsent) {
-    return AspNetUsersProfileTableCompanion(
+  UsersProfileTableCompanion toCompanion(bool nullToAbsent) {
+    return UsersProfileTableCompanion(
       profileId: Value(profileId),
       userId: Value(userId),
       firstName: Value(firstName),
@@ -11733,15 +11759,16 @@ class AspNetUsersProfileTableData extends DataClass
       phone: Value(phone),
       isActive: Value(isActive),
       createdDate: Value(createdDate),
+      isCurrent: Value(isCurrent),
     );
   }
 
-  factory AspNetUsersProfileTableData.fromJson(
+  factory UsersProfileTableData.fromJson(
     Map<String, dynamic> json, {
     ValueSerializer? serializer,
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return AspNetUsersProfileTableData(
+    return UsersProfileTableData(
       profileId: serializer.fromJson<String>(json['profileId']),
       userId: serializer.fromJson<String>(json['userId']),
       firstName: serializer.fromJson<String>(json['firstName']),
@@ -11750,6 +11777,7 @@ class AspNetUsersProfileTableData extends DataClass
       phone: serializer.fromJson<String>(json['phone']),
       isActive: serializer.fromJson<bool>(json['isActive']),
       createdDate: serializer.fromJson<DateTime>(json['createdDate']),
+      isCurrent: serializer.fromJson<bool>(json['isCurrent']),
     );
   }
   @override
@@ -11764,10 +11792,11 @@ class AspNetUsersProfileTableData extends DataClass
       'phone': serializer.toJson<String>(phone),
       'isActive': serializer.toJson<bool>(isActive),
       'createdDate': serializer.toJson<DateTime>(createdDate),
+      'isCurrent': serializer.toJson<bool>(isCurrent),
     };
   }
 
-  AspNetUsersProfileTableData copyWith({
+  UsersProfileTableData copyWith({
     String? profileId,
     String? userId,
     String? firstName,
@@ -11776,7 +11805,8 @@ class AspNetUsersProfileTableData extends DataClass
     String? phone,
     bool? isActive,
     DateTime? createdDate,
-  }) => AspNetUsersProfileTableData(
+    bool? isCurrent,
+  }) => UsersProfileTableData(
     profileId: profileId ?? this.profileId,
     userId: userId ?? this.userId,
     firstName: firstName ?? this.firstName,
@@ -11785,11 +11815,10 @@ class AspNetUsersProfileTableData extends DataClass
     phone: phone ?? this.phone,
     isActive: isActive ?? this.isActive,
     createdDate: createdDate ?? this.createdDate,
+    isCurrent: isCurrent ?? this.isCurrent,
   );
-  AspNetUsersProfileTableData copyWithCompanion(
-    AspNetUsersProfileTableCompanion data,
-  ) {
-    return AspNetUsersProfileTableData(
+  UsersProfileTableData copyWithCompanion(UsersProfileTableCompanion data) {
+    return UsersProfileTableData(
       profileId: data.profileId.present ? data.profileId.value : this.profileId,
       userId: data.userId.present ? data.userId.value : this.userId,
       firstName: data.firstName.present ? data.firstName.value : this.firstName,
@@ -11800,12 +11829,13 @@ class AspNetUsersProfileTableData extends DataClass
       createdDate: data.createdDate.present
           ? data.createdDate.value
           : this.createdDate,
+      isCurrent: data.isCurrent.present ? data.isCurrent.value : this.isCurrent,
     );
   }
 
   @override
   String toString() {
-    return (StringBuffer('AspNetUsersProfileTableData(')
+    return (StringBuffer('UsersProfileTableData(')
           ..write('profileId: $profileId, ')
           ..write('userId: $userId, ')
           ..write('firstName: $firstName, ')
@@ -11813,7 +11843,8 @@ class AspNetUsersProfileTableData extends DataClass
           ..write('email: $email, ')
           ..write('phone: $phone, ')
           ..write('isActive: $isActive, ')
-          ..write('createdDate: $createdDate')
+          ..write('createdDate: $createdDate, ')
+          ..write('isCurrent: $isCurrent')
           ..write(')'))
         .toString();
   }
@@ -11828,11 +11859,12 @@ class AspNetUsersProfileTableData extends DataClass
     phone,
     isActive,
     createdDate,
+    isCurrent,
   );
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is AspNetUsersProfileTableData &&
+      (other is UsersProfileTableData &&
           other.profileId == this.profileId &&
           other.userId == this.userId &&
           other.firstName == this.firstName &&
@@ -11840,11 +11872,12 @@ class AspNetUsersProfileTableData extends DataClass
           other.email == this.email &&
           other.phone == this.phone &&
           other.isActive == this.isActive &&
-          other.createdDate == this.createdDate);
+          other.createdDate == this.createdDate &&
+          other.isCurrent == this.isCurrent);
 }
 
-class AspNetUsersProfileTableCompanion
-    extends UpdateCompanion<AspNetUsersProfileTableData> {
+class UsersProfileTableCompanion
+    extends UpdateCompanion<UsersProfileTableData> {
   final Value<String> profileId;
   final Value<String> userId;
   final Value<String> firstName;
@@ -11853,8 +11886,9 @@ class AspNetUsersProfileTableCompanion
   final Value<String> phone;
   final Value<bool> isActive;
   final Value<DateTime> createdDate;
+  final Value<bool> isCurrent;
   final Value<int> rowid;
-  const AspNetUsersProfileTableCompanion({
+  const UsersProfileTableCompanion({
     this.profileId = const Value.absent(),
     this.userId = const Value.absent(),
     this.firstName = const Value.absent(),
@@ -11863,9 +11897,10 @@ class AspNetUsersProfileTableCompanion
     this.phone = const Value.absent(),
     this.isActive = const Value.absent(),
     this.createdDate = const Value.absent(),
+    this.isCurrent = const Value.absent(),
     this.rowid = const Value.absent(),
   });
-  AspNetUsersProfileTableCompanion.insert({
+  UsersProfileTableCompanion.insert({
     required String profileId,
     required String userId,
     required String firstName,
@@ -11874,6 +11909,7 @@ class AspNetUsersProfileTableCompanion
     required String phone,
     this.isActive = const Value.absent(),
     this.createdDate = const Value.absent(),
+    this.isCurrent = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : profileId = Value(profileId),
        userId = Value(userId),
@@ -11881,7 +11917,7 @@ class AspNetUsersProfileTableCompanion
        lastName = Value(lastName),
        email = Value(email),
        phone = Value(phone);
-  static Insertable<AspNetUsersProfileTableData> custom({
+  static Insertable<UsersProfileTableData> custom({
     Expression<String>? profileId,
     Expression<String>? userId,
     Expression<String>? firstName,
@@ -11890,6 +11926,7 @@ class AspNetUsersProfileTableCompanion
     Expression<String>? phone,
     Expression<bool>? isActive,
     Expression<DateTime>? createdDate,
+    Expression<bool>? isCurrent,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -11901,11 +11938,12 @@ class AspNetUsersProfileTableCompanion
       if (phone != null) 'phone': phone,
       if (isActive != null) 'is_active': isActive,
       if (createdDate != null) 'created_date': createdDate,
+      if (isCurrent != null) 'is_current': isCurrent,
       if (rowid != null) 'rowid': rowid,
     });
   }
 
-  AspNetUsersProfileTableCompanion copyWith({
+  UsersProfileTableCompanion copyWith({
     Value<String>? profileId,
     Value<String>? userId,
     Value<String>? firstName,
@@ -11914,9 +11952,10 @@ class AspNetUsersProfileTableCompanion
     Value<String>? phone,
     Value<bool>? isActive,
     Value<DateTime>? createdDate,
+    Value<bool>? isCurrent,
     Value<int>? rowid,
   }) {
-    return AspNetUsersProfileTableCompanion(
+    return UsersProfileTableCompanion(
       profileId: profileId ?? this.profileId,
       userId: userId ?? this.userId,
       firstName: firstName ?? this.firstName,
@@ -11925,6 +11964,7 @@ class AspNetUsersProfileTableCompanion
       phone: phone ?? this.phone,
       isActive: isActive ?? this.isActive,
       createdDate: createdDate ?? this.createdDate,
+      isCurrent: isCurrent ?? this.isCurrent,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -11956,6 +11996,9 @@ class AspNetUsersProfileTableCompanion
     if (createdDate.present) {
       map['created_date'] = Variable<DateTime>(createdDate.value);
     }
+    if (isCurrent.present) {
+      map['is_current'] = Variable<bool>(isCurrent.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -11964,7 +12007,7 @@ class AspNetUsersProfileTableCompanion
 
   @override
   String toString() {
-    return (StringBuffer('AspNetUsersProfileTableCompanion(')
+    return (StringBuffer('UsersProfileTableCompanion(')
           ..write('profileId: $profileId, ')
           ..write('userId: $userId, ')
           ..write('firstName: $firstName, ')
@@ -11973,6 +12016,7 @@ class AspNetUsersProfileTableCompanion
           ..write('phone: $phone, ')
           ..write('isActive: $isActive, ')
           ..write('createdDate: $createdDate, ')
+          ..write('isCurrent: $isCurrent, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -12012,8 +12056,11 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   );
   late final $ProvincesTableTable provincesTable = $ProvincesTableTable(this);
   late final $GenderTableTable genderTable = $GenderTableTable(this);
-  late final $AspNetUsersProfileTableTable aspNetUsersProfileTable =
-      $AspNetUsersProfileTableTable(this);
+  late final $UsersProfileTableTable usersProfileTable =
+      $UsersProfileTableTable(this);
+  late final UsersProfileDao usersProfileDao = UsersProfileDao(
+    this as AppDatabase,
+  );
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -12039,7 +12086,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     membershipTable,
     provincesTable,
     genderTable,
-    aspNetUsersProfileTable,
+    usersProfileTable,
   ];
 }
 
@@ -17741,8 +17788,8 @@ typedef $$GenderTableTableProcessedTableManager =
       GenderTableData,
       PrefetchHooks Function()
     >;
-typedef $$AspNetUsersProfileTableTableCreateCompanionBuilder =
-    AspNetUsersProfileTableCompanion Function({
+typedef $$UsersProfileTableTableCreateCompanionBuilder =
+    UsersProfileTableCompanion Function({
       required String profileId,
       required String userId,
       required String firstName,
@@ -17751,10 +17798,11 @@ typedef $$AspNetUsersProfileTableTableCreateCompanionBuilder =
       required String phone,
       Value<bool> isActive,
       Value<DateTime> createdDate,
+      Value<bool> isCurrent,
       Value<int> rowid,
     });
-typedef $$AspNetUsersProfileTableTableUpdateCompanionBuilder =
-    AspNetUsersProfileTableCompanion Function({
+typedef $$UsersProfileTableTableUpdateCompanionBuilder =
+    UsersProfileTableCompanion Function({
       Value<String> profileId,
       Value<String> userId,
       Value<String> firstName,
@@ -17763,12 +17811,13 @@ typedef $$AspNetUsersProfileTableTableUpdateCompanionBuilder =
       Value<String> phone,
       Value<bool> isActive,
       Value<DateTime> createdDate,
+      Value<bool> isCurrent,
       Value<int> rowid,
     });
 
-class $$AspNetUsersProfileTableTableFilterComposer
-    extends Composer<_$AppDatabase, $AspNetUsersProfileTableTable> {
-  $$AspNetUsersProfileTableTableFilterComposer({
+class $$UsersProfileTableTableFilterComposer
+    extends Composer<_$AppDatabase, $UsersProfileTableTable> {
+  $$UsersProfileTableTableFilterComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -17814,11 +17863,16 @@ class $$AspNetUsersProfileTableTableFilterComposer
     column: $table.createdDate,
     builder: (column) => ColumnFilters(column),
   );
+
+  ColumnFilters<bool> get isCurrent => $composableBuilder(
+    column: $table.isCurrent,
+    builder: (column) => ColumnFilters(column),
+  );
 }
 
-class $$AspNetUsersProfileTableTableOrderingComposer
-    extends Composer<_$AppDatabase, $AspNetUsersProfileTableTable> {
-  $$AspNetUsersProfileTableTableOrderingComposer({
+class $$UsersProfileTableTableOrderingComposer
+    extends Composer<_$AppDatabase, $UsersProfileTableTable> {
+  $$UsersProfileTableTableOrderingComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -17864,11 +17918,16 @@ class $$AspNetUsersProfileTableTableOrderingComposer
     column: $table.createdDate,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<bool> get isCurrent => $composableBuilder(
+    column: $table.isCurrent,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
-class $$AspNetUsersProfileTableTableAnnotationComposer
-    extends Composer<_$AppDatabase, $AspNetUsersProfileTableTable> {
-  $$AspNetUsersProfileTableTableAnnotationComposer({
+class $$UsersProfileTableTableAnnotationComposer
+    extends Composer<_$AppDatabase, $UsersProfileTableTable> {
+  $$UsersProfileTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -17900,49 +17959,46 @@ class $$AspNetUsersProfileTableTableAnnotationComposer
     column: $table.createdDate,
     builder: (column) => column,
   );
+
+  GeneratedColumn<bool> get isCurrent =>
+      $composableBuilder(column: $table.isCurrent, builder: (column) => column);
 }
 
-class $$AspNetUsersProfileTableTableTableManager
+class $$UsersProfileTableTableTableManager
     extends
         RootTableManager<
           _$AppDatabase,
-          $AspNetUsersProfileTableTable,
-          AspNetUsersProfileTableData,
-          $$AspNetUsersProfileTableTableFilterComposer,
-          $$AspNetUsersProfileTableTableOrderingComposer,
-          $$AspNetUsersProfileTableTableAnnotationComposer,
-          $$AspNetUsersProfileTableTableCreateCompanionBuilder,
-          $$AspNetUsersProfileTableTableUpdateCompanionBuilder,
+          $UsersProfileTableTable,
+          UsersProfileTableData,
+          $$UsersProfileTableTableFilterComposer,
+          $$UsersProfileTableTableOrderingComposer,
+          $$UsersProfileTableTableAnnotationComposer,
+          $$UsersProfileTableTableCreateCompanionBuilder,
+          $$UsersProfileTableTableUpdateCompanionBuilder,
           (
-            AspNetUsersProfileTableData,
+            UsersProfileTableData,
             BaseReferences<
               _$AppDatabase,
-              $AspNetUsersProfileTableTable,
-              AspNetUsersProfileTableData
+              $UsersProfileTableTable,
+              UsersProfileTableData
             >,
           ),
-          AspNetUsersProfileTableData,
+          UsersProfileTableData,
           PrefetchHooks Function()
         > {
-  $$AspNetUsersProfileTableTableTableManager(
+  $$UsersProfileTableTableTableManager(
     _$AppDatabase db,
-    $AspNetUsersProfileTableTable table,
+    $UsersProfileTableTable table,
   ) : super(
         TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
-              $$AspNetUsersProfileTableTableFilterComposer(
-                $db: db,
-                $table: table,
-              ),
+              $$UsersProfileTableTableFilterComposer($db: db, $table: table),
           createOrderingComposer: () =>
-              $$AspNetUsersProfileTableTableOrderingComposer(
-                $db: db,
-                $table: table,
-              ),
+              $$UsersProfileTableTableOrderingComposer($db: db, $table: table),
           createComputedFieldComposer: () =>
-              $$AspNetUsersProfileTableTableAnnotationComposer(
+              $$UsersProfileTableTableAnnotationComposer(
                 $db: db,
                 $table: table,
               ),
@@ -17956,8 +18012,9 @@ class $$AspNetUsersProfileTableTableTableManager
                 Value<String> phone = const Value.absent(),
                 Value<bool> isActive = const Value.absent(),
                 Value<DateTime> createdDate = const Value.absent(),
+                Value<bool> isCurrent = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
-              }) => AspNetUsersProfileTableCompanion(
+              }) => UsersProfileTableCompanion(
                 profileId: profileId,
                 userId: userId,
                 firstName: firstName,
@@ -17966,6 +18023,7 @@ class $$AspNetUsersProfileTableTableTableManager
                 phone: phone,
                 isActive: isActive,
                 createdDate: createdDate,
+                isCurrent: isCurrent,
                 rowid: rowid,
               ),
           createCompanionCallback:
@@ -17978,8 +18036,9 @@ class $$AspNetUsersProfileTableTableTableManager
                 required String phone,
                 Value<bool> isActive = const Value.absent(),
                 Value<DateTime> createdDate = const Value.absent(),
+                Value<bool> isCurrent = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
-              }) => AspNetUsersProfileTableCompanion.insert(
+              }) => UsersProfileTableCompanion.insert(
                 profileId: profileId,
                 userId: userId,
                 firstName: firstName,
@@ -17988,6 +18047,7 @@ class $$AspNetUsersProfileTableTableTableManager
                 phone: phone,
                 isActive: isActive,
                 createdDate: createdDate,
+                isCurrent: isCurrent,
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
@@ -17998,25 +18058,25 @@ class $$AspNetUsersProfileTableTableTableManager
       );
 }
 
-typedef $$AspNetUsersProfileTableTableProcessedTableManager =
+typedef $$UsersProfileTableTableProcessedTableManager =
     ProcessedTableManager<
       _$AppDatabase,
-      $AspNetUsersProfileTableTable,
-      AspNetUsersProfileTableData,
-      $$AspNetUsersProfileTableTableFilterComposer,
-      $$AspNetUsersProfileTableTableOrderingComposer,
-      $$AspNetUsersProfileTableTableAnnotationComposer,
-      $$AspNetUsersProfileTableTableCreateCompanionBuilder,
-      $$AspNetUsersProfileTableTableUpdateCompanionBuilder,
+      $UsersProfileTableTable,
+      UsersProfileTableData,
+      $$UsersProfileTableTableFilterComposer,
+      $$UsersProfileTableTableOrderingComposer,
+      $$UsersProfileTableTableAnnotationComposer,
+      $$UsersProfileTableTableCreateCompanionBuilder,
+      $$UsersProfileTableTableUpdateCompanionBuilder,
       (
-        AspNetUsersProfileTableData,
+        UsersProfileTableData,
         BaseReferences<
           _$AppDatabase,
-          $AspNetUsersProfileTableTable,
-          AspNetUsersProfileTableData
+          $UsersProfileTableTable,
+          UsersProfileTableData
         >,
       ),
-      AspNetUsersProfileTableData,
+      UsersProfileTableData,
       PrefetchHooks Function()
     >;
 
@@ -18069,9 +18129,6 @@ class $AppDatabaseManager {
       $$ProvincesTableTableTableManager(_db, _db.provincesTable);
   $$GenderTableTableTableManager get genderTable =>
       $$GenderTableTableTableManager(_db, _db.genderTable);
-  $$AspNetUsersProfileTableTableTableManager get aspNetUsersProfileTable =>
-      $$AspNetUsersProfileTableTableTableManager(
-        _db,
-        _db.aspNetUsersProfileTable,
-      );
+  $$UsersProfileTableTableTableManager get usersProfileTable =>
+      $$UsersProfileTableTableTableManager(_db, _db.usersProfileTable);
 }
