@@ -12,3 +12,7 @@ type LoginResponse {
   expirationDate: String
   refreshToken: String
 }
+
+type Query {
+  refreshToken(oldRefreshToken: String!): LoginResponse
+}

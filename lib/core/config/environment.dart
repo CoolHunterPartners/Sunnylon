@@ -12,9 +12,10 @@ class Environment {
   Environment._internal();
 
   /// 🎯 Base URL del API
-  static String get baseUrl =>
-      dotenv.env['BASE_URL'] ??
-      'https://api.sunnylon.com'; // Default configured for Sunnylon
+  static String get baseUrl {
+    final url = dotenv.env['BASE_URL'] ?? 'https://api.sunnylon.com/graphql/';
+    return url.endsWith('/') ? url : '$url/';
+  }
 
   /// ⏱️ Timeout para requests HTTP (en milisegundos)
   static int get apiTimeout =>

@@ -6,6 +6,8 @@ import '../../config/environment.dart';
 import '../local_storage/token_store_contract.dart';
 import 'graphql_service.dart';
 import 'helpers/graphql_exception_handler.dart';
+import 'links/refresh_token_link.dart';
+import 'links/retry_link.dart';
 
 class GraphQLServiceImpl implements GraphQLService {
   late final GraphQLClient _client;
@@ -16,10 +18,7 @@ class GraphQLServiceImpl implements GraphQLService {
   }
 
   void _initClient() {
-    var url = Environment.baseUrl;
-    if (!url.endsWith('/')) {
-      url = '$url/';
-    }
+    final url = Environment.baseUrl;
 
     final httpLink = HttpLink(url);
 
@@ -30,7 +29,10 @@ class GraphQLServiceImpl implements GraphQLService {
       },
     );
 
-    final link = authLink.concat(httpLink);
+    final retryLink = RetryLink(maxRetries: Environment.apiRetryAttempts);
+    final refreshTokenLink = RefreshTokenLink(_tokenStore);
+
+    final link = Link.from([retryLink, refreshTokenLink, authLink, httpLink]);
 
     _client = GraphQLClient(
       link: link,

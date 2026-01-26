@@ -1,0 +1,7 @@
+query RefreshToken($oldRefreshToken: String!) {
+  refreshToken(oldRefreshToken: $oldRefreshToken) {
+    accessToken
+    refreshToken
+    expirationDate
+  }
+}
