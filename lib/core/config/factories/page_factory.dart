@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sunnylon/features/home/presentation/today_route_screen.dart';
 
 import '../../../features/auth/domain/use_cases/login_use_case.dart';
 import '../../../features/auth/presentation/blocs/login/login_bloc.dart';
@@ -31,10 +32,10 @@ class PageFactory {
     return const ForgotPasswordScreen();
   }
 
-  // /// Creates the home page
-  // static Widget createHomePage() {
-  //   return const HomeScreen();
-  // }
+  /// Creates the home page
+  static Widget createHomePage() {
+    return const TodayRouteScreen();
+  }
 
   /// Creates the settings page
   static Widget createSettingsPage() {

@@ -1,35 +1,12 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:http/http.dart' as http;
-import 'package:http/io_client.dart';
-import 'package:sunnylon/core/config/environment.dart';
 import 'package:sunnylon/core/widgets/primary_button.dart';
 
 import '../../../../core/common/constants/app_images.dart';
 import '../blocs/login/login_bloc.dart';
 import '../blocs/login/login_event.dart';
 import '../blocs/login/login_state.dart';
-
-// Función fábrica para crear un cliente HTTP endurecido (Nivel 3)
-http.Client createCustomHttpClient() {
-  // Configuración de bajo nivel del socket TCP
-  final HttpClient httpClient = HttpClient()
-    ..connectionTimeout =
-        const Duration(seconds: 10) // Tiempo para establecer conexión
-    ..idleTimeout = const Duration(seconds: 30); // Tiempo máximo de inactividad
-
-  // (Opcional) Configuración de Proxy para depuración con Charles/Fiddler
-  // httpClient.findProxy = (uri) => "PROXY 192.168.1.50:8888";
-
-  // (Opcional) Bypass de certificados SSL para desarrollo local
-  // httpClient.badCertificateCallback = ((X509Certificate cert, String host, int port) => true);
-
-  return IOClient(httpClient);
-}
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -137,7 +114,6 @@ class LoginScreen extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 24),
-                    _DebugGraphQLButton(),
                   ],
                 ),
               ),
@@ -243,134 +219,6 @@ class _LoginButton extends StatelessWidget {
                 },
         );
       },
-    );
-  }
-}
-
-class _DebugGraphQLButton extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: TextButton(
-        style: TextButton.styleFrom(
-          foregroundColor: Colors.white,
-          backgroundColor: Colors.green,
-        ),
-        onPressed: () async {
-          showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (c) => const Center(child: CircularProgressIndicator()),
-          );
-
-          try {
-            print(
-              '🔍 Debug (Nivel 3): Testing Hybrid HTTP+GraphQL Connection...',
-            );
-            // Force trailing slash for the test
-            var urlString = Environment.baseUrl;
-            if (!urlString.endsWith('/')) {
-              urlString = '$urlString/';
-            }
-            print('   Target: $urlString');
-
-            // 1. Usar la fábrica personalizada con IOClient
-            final customHttpClient = createCustomHttpClient();
-
-            // 2. Inyectar en HttpLink
-            final httpLink = HttpLink(urlString, httpClient: customHttpClient);
-
-            // 3. Crear Cliente con Políticas de Timeout Lógico
-            final client = GraphQLClient(
-              link: httpLink,
-              cache: GraphQLCache(),
-              defaultPolicies: DefaultPolicies(
-                query: Policies(fetch: FetchPolicy.networkOnly),
-                mutate: Policies(fetch: FetchPolicy.networkOnly),
-              ),
-            );
-
-            const mutation = r'''
-             mutation Login($userName: String!, $password: String!) {
-              login(login: { password: $password, userName: $userName }) {
-                accessToken
-                expirationDate
-                refreshToken
-              }
-            }
-            ''';
-
-            final result = await client.mutate(
-              MutationOptions(
-                document: gql(mutation),
-                variables: const {
-                  'userName': 'pedrodlcruz@coolhunterpartners.com',
-                  'password': 'Pass#123',
-                },
-              ),
-            );
-
-            if (context.mounted) Navigator.pop(context);
-
-            if (result.hasException) {
-              print('❌ Debug Error: ${result.exception}');
-              if (context.mounted) {
-                showDialog(
-                  context: context,
-                  builder: (context) => AlertDialog(
-                    title: const Text('GraphQL Error (Nivel 3)'),
-                    content: SingleChildScrollView(
-                      child: Text(result.exception.toString()),
-                    ),
-                    actions: [
-                      TextButton(
-                        onPressed: () => Navigator.pop(context),
-                        child: const Text('OK'),
-                      ),
-                    ],
-                  ),
-                );
-              }
-            } else {
-              print('✅ Debug Success: ${result.data}');
-              if (context.mounted) {
-                showDialog(
-                  context: context,
-                  builder: (context) => AlertDialog(
-                    title: const Text('Success (Nivel 3)!'),
-                    content: Text('Data: ${result.data}'),
-                    actions: [
-                      TextButton(
-                        onPressed: () => Navigator.pop(context),
-                        child: const Text('OK'),
-                      ),
-                    ],
-                  ),
-                );
-              }
-            }
-          } catch (e) {
-            if (context.mounted) Navigator.pop(context);
-            print('❌ Debug Critical Error: $e');
-            if (context.mounted) {
-              showDialog(
-                context: context,
-                builder: (context) => AlertDialog(
-                  title: const Text('Critical Error'),
-                  content: Text(e.toString()),
-                  actions: [
-                    TextButton(
-                      onPressed: () => Navigator.pop(context),
-                      child: const Text('OK'),
-                    ),
-                  ],
-                ),
-              );
-            }
-          }
-        },
-        child: const Text('🐞 TEST GRAPHQL (NIVEL 3)'),
-      ),
     );
   }
 }

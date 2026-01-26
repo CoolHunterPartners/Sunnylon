@@ -1,4 +1,4 @@
-import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:graphql/client.dart';
 import 'package:sunnylon/core/common/helpers/app_failure.dart';
 
 /// Helper class to handle GraphQL exceptions.

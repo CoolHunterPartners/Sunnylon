@@ -1,23 +1,11 @@
-import 'dart:io';
-
-import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:graphql/client.dart';
 import 'package:http/http.dart' as http;
-import 'package:http/io_client.dart';
 import 'package:sunnylon/core/common/helpers/app_failure.dart';
 
 import '../../config/environment.dart';
 import '../local_storage/token_store_contract.dart';
 import 'graphql_service.dart';
 import 'helpers/graphql_exception_handler.dart';
-
-// Función fábrica para crear un cliente HTTP endurecido (Nivel 3)
-http.Client createCustomHttpClient() {
-  final HttpClient httpClient = HttpClient()
-    ..connectionTimeout = const Duration(seconds: 10)
-    ..idleTimeout = const Duration(seconds: 30);
-
-  return IOClient(httpClient);
-}
 
 class GraphQLServiceImpl implements GraphQLService {
   late final GraphQLClient _client;
@@ -29,8 +17,8 @@ class GraphQLServiceImpl implements GraphQLService {
       url = '$url/';
     }
 
-    final httpLink = HttpLink(url, httpClient: createCustomHttpClient());
-    print('🚀 GraphQLService Initialized with (Level 3 Client):');
+    final httpLink = HttpLink(url, httpClient: http.Client());
+    print('🚀 GraphQLService Initialized with:');
     print('   Base URL: $url');
     print('   Timeout: ${Environment.apiTimeout}ms');
 
@@ -50,13 +38,12 @@ class GraphQLServiceImpl implements GraphQLService {
 
     _client = GraphQLClient(
       link: link,
-      // The default store is the InMemoryStore, which does not persist to disk
       cache: GraphQLCache(),
       defaultPolicies: DefaultPolicies(
         query: Policies(fetch: FetchPolicy.networkOnly),
         mutate: Policies(fetch: FetchPolicy.networkOnly),
       ),
-      queryRequestTimeout: const Duration(seconds: 30),
+      queryRequestTimeout: const Duration(seconds: 30), // The Fix
     );
   }
 
@@ -71,7 +58,7 @@ class GraphQLServiceImpl implements GraphQLService {
       variables: variables ?? {},
       fetchPolicy: fetchPolicyNetworkOnly
           ? FetchPolicy.networkOnly
-          : FetchPolicy.networkOnly, // Enforce Network Only for reliability
+          : FetchPolicy.cacheFirst,
     );
 
     try {
@@ -83,7 +70,7 @@ class GraphQLServiceImpl implements GraphQLService {
 
       return result.data ?? {};
     } catch (e) {
-      if (e is AppFailure) rethrow; // Already handled
+      if (e is AppFailure) rethrow;
       throw AppFailure.common(message: 'Query error: $e');
     }
   }
@@ -96,7 +83,6 @@ class GraphQLServiceImpl implements GraphQLService {
     final options = MutationOptions(
       document: gql(mutationString),
       variables: variables ?? {},
-      fetchPolicy: FetchPolicy.networkOnly, // Enforce Network Only
     );
 
     try {

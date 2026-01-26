@@ -71,11 +71,12 @@ class AppRouter {
           return AppShell(child: child);
         },
         routes: [
-          // GoRoute(
-          //   path: AppRoute.home.path,
-          //   name: AppRoute.home.name,
-          //   builder: (context, state) => PageFactory.createHomePage(),
-          // ),
+          GoRoute(
+            path: AppRoute.home.path,
+            name: AppRoute.home.name,
+            builder: (context, state) => PageFactory.createHomePage(),
+          ),
+
           GoRoute(
             path: AppRoute.loans.path,
             name: AppRoute.loans.name,
