@@ -233,7 +233,7 @@ class _NewClientStep4ScreenState extends State<NewClientStep4Screen> {
                       width: double.infinity,
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: theme.colorScheme.primary.withOpacity(0.1),
+                        color: theme.colorScheme.primary.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Text(
@@ -309,7 +309,7 @@ class _NewClientStep4ScreenState extends State<NewClientStep4Screen> {
         text,
         style: theme.textTheme.bodyMedium?.copyWith(
           fontWeight: FontWeight.w500,
-          color: theme.textTheme.bodyMedium?.color?.withOpacity(0.8),
+          color: theme.textTheme.bodyMedium?.color?.withValues(alpha: 0.8),
         ),
       ),
     );

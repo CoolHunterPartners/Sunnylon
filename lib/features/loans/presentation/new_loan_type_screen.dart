@@ -80,11 +80,13 @@ class _SelectionCard extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: isDark ? Colors.grey[800]!.withOpacity(0.5) : Colors.white,
+          color: isDark
+              ? Colors.grey[800]!.withValues(alpha: 0.5)
+              : Colors.white,
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
+              color: Colors.black.withValues(alpha: 0.05),
               blurRadius: 10,
               offset: const Offset(0, 4),
             ),
@@ -96,7 +98,7 @@ class _SelectionCard extends StatelessWidget {
               width: 48,
               height: 48,
               decoration: BoxDecoration(
-                color: theme.colorScheme.primary.withOpacity(0.1),
+                color: theme.colorScheme.primary.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Icon(icon, color: theme.colorScheme.primary),
@@ -115,8 +117,8 @@ class _SelectionCard extends StatelessWidget {
                   Text(
                     subtitle,
                     style: theme.textTheme.bodyMedium?.copyWith(
-                      color: theme.textTheme.bodyMedium?.color?.withOpacity(
-                        0.7,
+                      color: theme.textTheme.bodyMedium?.color?.withValues(
+                        alpha: 0.7,
                       ),
                     ),
                   ),

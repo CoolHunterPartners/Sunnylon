@@ -133,7 +133,7 @@ class _SummaryCard extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: colorScheme.primary.withOpacity(0.1),
+                color: colorScheme.primary.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Icon(
@@ -198,10 +198,7 @@ class _ClientList extends StatelessWidget {
 }
 
 class _ClientListItem extends StatelessWidget {
-  const _ClientListItem({
-    required this.customer,
-    required this.onTap,
-  });
+  const _ClientListItem({required this.customer, required this.onTap});
 
   final CollectionCustomer customer;
   final VoidCallback onTap;
@@ -209,7 +206,9 @@ class _ClientListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    final statusColor = customer.status == 'Pagado' ? Colors.green : Colors.yellow;
+    final statusColor = customer.status == 'Pagado'
+        ? Colors.green
+        : Colors.yellow;
 
     return Card(
       child: InkWell(
@@ -235,7 +234,10 @@ class _ClientListItem extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 4),
-                    Text('\$${customer.todayAmount.toStringAsFixed(2)}', style: textTheme.bodyMedium),
+                    Text(
+                      '\$${customer.todayAmount.toStringAsFixed(2)}',
+                      style: textTheme.bodyMedium,
+                    ),
                     const SizedBox(height: 4),
                     Text(customer.status, style: textTheme.bodySmall),
                   ],

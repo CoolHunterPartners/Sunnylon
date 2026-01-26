@@ -1,5 +1,4 @@
 import 'package:graphql/client.dart';
-import 'package:http/http.dart' as http;
 import 'package:sunnylon/core/common/helpers/app_failure.dart';
 
 import '../../config/environment.dart';
@@ -17,19 +16,11 @@ class GraphQLServiceImpl implements GraphQLService {
       url = '$url/';
     }
 
-    final httpLink = HttpLink(url, httpClient: http.Client());
-    print('🚀 GraphQLService Initialized with:');
-    print('   Base URL: $url');
-    print('   Timeout: ${Environment.apiTimeout}ms');
+    final httpLink = HttpLink(url);
 
     final authLink = AuthLink(
       getToken: () async {
-        print('🔐 Getting Access Token...');
-        final start = DateTime.now();
         final token = await _tokenStore.readAccessToken();
-        print(
-          '🔐 Access Token retrieved in ${DateTime.now().difference(start).inMilliseconds}ms',
-        );
         return token != null ? 'Bearer $token' : null;
       },
     );
@@ -89,7 +80,6 @@ class GraphQLServiceImpl implements GraphQLService {
       final result = await _client.mutate(options);
 
       if (result.hasException) {
-        print(result.exception);
         throw GraphQLExceptionHandler.fromOperationException(result.exception!);
       }
 

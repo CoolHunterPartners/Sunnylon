@@ -97,16 +97,20 @@ class _MarkStatusBottomSheetState extends State<MarkStatusBottomSheet> {
   }
 
   Widget _buildStatusOption(String title, BuildContext context) {
-    return RadioListTile<String>(
+    return ListTile(
       title: Text(title),
-      value: title,
-      groupValue: _selectedStatus,
-      onChanged: (String? value) {
-        if (value != null) {
-          setState(() {
-            _selectedStatus = value;
-          });
-        }
+      leading: Icon(
+        _selectedStatus == title
+            ? Icons.radio_button_checked
+            : Icons.radio_button_unchecked,
+        color: _selectedStatus == title
+            ? Theme.of(context).colorScheme.primary
+            : Theme.of(context).colorScheme.onSurfaceVariant,
+      ),
+      onTap: () {
+        setState(() {
+          _selectedStatus = title;
+        });
       },
       contentPadding: EdgeInsets.zero,
     );

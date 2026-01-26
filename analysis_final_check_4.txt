@@ -1,0 +1,6 @@
+Analyzing Sunnylon...                                           
+
+   info • 'groupValue' is deprecated and shouldn't be used. Use a RadioGroup ancestor to manage group value instead. This feature was deprecated after v3.32.0-0.0.pre • lib/features/home/presentation/widgets/mark_status_bottom_sheet.dart:104:9 • deprecated_member_use
+   info • 'onChanged' is deprecated and shouldn't be used. Use RadioGroup to handle value change instead. This feature was deprecated after v3.32.0-0.0.pre • lib/features/home/presentation/widgets/mark_status_bottom_sheet.dart:105:9 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/features/loans/presentation/existing_client_loan_form_screen.dart:150:58 • deprecated_member_use
+

@@ -88,7 +88,7 @@ class _RegisterPaymentScreenState extends State<RegisterPaymentScreen> {
             Text('Método de pago', style: textTheme.titleMedium),
             const SizedBox(height: 8),
             DropdownButtonFormField<String>(
-              value: _selectedPaymentMethod,
+              initialValue: _selectedPaymentMethod,
               hint: const Text('Seleccione un método'),
               items: _paymentMethods.map((String method) {
                 return DropdownMenuItem<String>(
@@ -143,7 +143,7 @@ class _RegisterPaymentScreenState extends State<RegisterPaymentScreen> {
                 child: ElevatedButton(
                   onPressed: () => context.pop(),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: colorScheme.surfaceVariant,
+                    backgroundColor: colorScheme.surfaceContainerHighest,
                     foregroundColor: colorScheme.onSurfaceVariant,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(

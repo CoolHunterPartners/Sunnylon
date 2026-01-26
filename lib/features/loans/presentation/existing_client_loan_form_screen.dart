@@ -6,16 +6,18 @@ class ExistingClientLoanFormScreen extends StatefulWidget {
   const ExistingClientLoanFormScreen({super.key});
 
   @override
-  State<ExistingClientLoanFormScreen> createState() => _ExistingClientLoanFormScreenState();
+  State<ExistingClientLoanFormScreen> createState() =>
+      _ExistingClientLoanFormScreenState();
 }
 
-class _ExistingClientLoanFormScreenState extends State<ExistingClientLoanFormScreen> {
+class _ExistingClientLoanFormScreenState
+    extends State<ExistingClientLoanFormScreen> {
   final _formKey = GlobalKey<FormState>();
-  
+
   // Controllers
   final _amountController = TextEditingController();
   final _notesController = TextEditingController();
-  
+
   // State variables
   String? _selectedTerm;
   String? _selectedFrequency;
@@ -56,19 +58,21 @@ class _ExistingClientLoanFormScreenState extends State<ExistingClientLoanFormScr
                       ),
                     ),
                     const SizedBox(height: 8),
-                    
+
                     // Client Name
                     Text(
                       'Cliente: Mariana Rodríguez',
                       style: theme.textTheme.titleMedium,
                     ),
                     const SizedBox(height: 24),
-                    
+
                     // Amount Field
                     _buildLabel(theme, 'Monto solicitado'),
                     TextFormField(
                       controller: _amountController,
-                      keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                      keyboardType: const TextInputType.numberWithOptions(
+                        decimal: true,
+                      ),
                       decoration: InputDecoration(
                         hintText: '\$1,000.00',
                         border: OutlineInputBorder(
@@ -78,11 +82,11 @@ class _ExistingClientLoanFormScreenState extends State<ExistingClientLoanFormScr
                       ),
                     ),
                     const SizedBox(height: 16),
-                    
+
                     // Term Select
                     _buildLabel(theme, 'Plazo'),
                     DropdownButtonFormField<String>(
-                      value: _selectedTerm,
+                      initialValue: _selectedTerm,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
@@ -102,11 +106,11 @@ class _ExistingClientLoanFormScreenState extends State<ExistingClientLoanFormScr
                       },
                     ),
                     const SizedBox(height: 16),
-                    
+
                     // Frequency Select
                     _buildLabel(theme, 'Frecuencia de pago'),
                     DropdownButtonFormField<String>(
-                      value: _selectedFrequency,
+                      initialValue: _selectedFrequency,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
@@ -115,10 +119,22 @@ class _ExistingClientLoanFormScreenState extends State<ExistingClientLoanFormScr
                       ),
                       hint: const Text('Seleccionar frecuencia'),
                       items: const [
-                        DropdownMenuItem(value: 'diario', child: Text('Diario')),
-                        DropdownMenuItem(value: 'semanal', child: Text('Semanal')),
-                        DropdownMenuItem(value: 'quincenal', child: Text('Quincenal')),
-                        DropdownMenuItem(value: 'mensual', child: Text('Mensual')),
+                        DropdownMenuItem(
+                          value: 'diario',
+                          child: Text('Diario'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'semanal',
+                          child: Text('Semanal'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'quincenal',
+                          child: Text('Quincenal'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'mensual',
+                          child: Text('Mensual'),
+                        ),
                       ],
                       onChanged: (value) {
                         setState(() {
@@ -127,7 +143,7 @@ class _ExistingClientLoanFormScreenState extends State<ExistingClientLoanFormScr
                       },
                     ),
                     const SizedBox(height: 16),
-                    
+
                     // Notes Field
                     _buildLabel(theme, 'Notas (opcional)'),
                     TextFormField(
@@ -142,12 +158,12 @@ class _ExistingClientLoanFormScreenState extends State<ExistingClientLoanFormScr
                       ),
                     ),
                     const SizedBox(height: 24),
-                    
+
                     // Dynamic Summary
                     Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: theme.colorScheme.primary.withOpacity(0.1),
+                        color: theme.colorScheme.primary.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Center(
@@ -165,7 +181,7 @@ class _ExistingClientLoanFormScreenState extends State<ExistingClientLoanFormScr
               ),
             ),
           ),
-          
+
           // Action Buttons
           Padding(
             padding: const EdgeInsets.all(16),
@@ -181,7 +197,8 @@ class _ExistingClientLoanFormScreenState extends State<ExistingClientLoanFormScr
                         const SnackBar(content: Text('Solicitud enviada')),
                       );
                       context.pop(); // Go back to list
-                      context.pop(); // Go back to type selection (actually we want to go back to list, so pop twice or goNamed)
+                      context
+                          .pop(); // Go back to type selection (actually we want to go back to list, so pop twice or goNamed)
                       // Better: context.goNamed('loans');
                     },
                   ),
@@ -193,7 +210,9 @@ class _ExistingClientLoanFormScreenState extends State<ExistingClientLoanFormScr
                   child: TextButton(
                     onPressed: () => context.pop(),
                     style: TextButton.styleFrom(
-                      backgroundColor: isDark ? Colors.grey[800] : Colors.grey[200],
+                      backgroundColor: isDark
+                          ? Colors.grey[800]
+                          : Colors.grey[200],
                       foregroundColor: isDark ? Colors.white : Colors.black87,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
@@ -201,7 +220,10 @@ class _ExistingClientLoanFormScreenState extends State<ExistingClientLoanFormScr
                     ),
                     child: const Text(
                       'Cancelar',
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),

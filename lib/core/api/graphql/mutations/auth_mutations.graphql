@@ -1,0 +1,7 @@
+mutation Login($userName: String!, $password: String!) {
+  login(login: { password: $password, userName: $userName }) {
+    accessToken
+    expirationDate
+    refreshToken
+  }
+}

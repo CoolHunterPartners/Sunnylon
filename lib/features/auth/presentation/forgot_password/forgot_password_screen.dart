@@ -41,7 +41,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                     'Ingresa el correo electrónico asociado a tu cuenta y te enviaremos un correo con instrucciones para restablecer tu contraseña.',
                     textAlign: TextAlign.center,
                     style: textTheme.bodyLarge?.copyWith(
-                      color: colorScheme.onSurface.withOpacity(0.7),
+                      color: colorScheme.onSurface.withValues(alpha: 0.7),
                     ),
                   ),
                   const SizedBox(height: 32),
@@ -61,7 +61,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                       hintText: 'Ingresa tu correo electrónico',
                       prefixIcon: Icon(
                         Icons.email_outlined,
-                        color: colorScheme.onSurface.withOpacity(0.7),
+                        color: colorScheme.onSurface.withValues(alpha: 0.7),
                       ),
                     ),
                   ),

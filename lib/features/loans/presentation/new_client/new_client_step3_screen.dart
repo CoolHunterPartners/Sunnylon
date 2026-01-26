@@ -149,10 +149,14 @@ class _NewClientStep3ScreenState extends State<NewClientStep3Screen> {
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         decoration: BoxDecoration(
                           border: Border.all(
-                            color: theme.colorScheme.primary.withOpacity(0.5),
+                            color: theme.colorScheme.primary.withValues(
+                              alpha: 0.5,
+                            ),
                           ),
                           borderRadius: BorderRadius.circular(12),
-                          color: theme.colorScheme.primary.withOpacity(0.05),
+                          color: theme.colorScheme.primary.withValues(
+                            alpha: 0.05,
+                          ),
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -235,7 +239,7 @@ class _NewClientStep3ScreenState extends State<NewClientStep3Screen> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: isDark ? Colors.grey[800]!.withOpacity(0.2) : Colors.white,
+        color: isDark ? Colors.grey[800]!.withValues(alpha: 0.2) : Colors.white,
         border: Border.all(
           color: isDark ? Colors.grey[700]! : Colors.grey[300]!,
         ),
@@ -337,7 +341,7 @@ class _NewClientStep3ScreenState extends State<NewClientStep3Screen> {
         text,
         style: theme.textTheme.bodyMedium?.copyWith(
           fontWeight: FontWeight.w500,
-          color: theme.textTheme.bodyMedium?.color?.withOpacity(0.8),
+          color: theme.textTheme.bodyMedium?.color?.withValues(alpha: 0.8),
         ),
       ),
     );

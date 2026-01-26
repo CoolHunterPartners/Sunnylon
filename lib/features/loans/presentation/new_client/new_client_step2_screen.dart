@@ -241,7 +241,7 @@ class _NewClientStep2ScreenState extends State<NewClientStep2Screen> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: isDark ? Colors.grey[800]!.withOpacity(0.2) : Colors.white,
+        color: isDark ? Colors.grey[800]!.withValues(alpha: 0.2) : Colors.white,
         border: Border.all(
           color: isDark ? Colors.grey[700]! : Colors.grey[300]!,
         ),
@@ -324,7 +324,7 @@ class _NewClientStep2ScreenState extends State<NewClientStep2Screen> {
         text,
         style: theme.textTheme.bodyMedium?.copyWith(
           fontWeight: FontWeight.w500,
-          color: theme.textTheme.bodyMedium?.color?.withOpacity(0.8),
+          color: theme.textTheme.bodyMedium?.color?.withValues(alpha: 0.8),
         ),
       ),
     );

@@ -121,7 +121,7 @@ class NewClientStep5Screen extends StatelessWidget {
                             'Notas',
                             style: theme.textTheme.bodySmall?.copyWith(
                               color: theme.textTheme.bodySmall?.color
-                                  ?.withOpacity(0.7),
+                                  ?.withValues(alpha: 0.7),
                             ),
                           ),
                           const SizedBox(height: 4),
@@ -140,12 +140,12 @@ class NewClientStep5Screen extends StatelessWidget {
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
                       color: isDark
-                          ? Colors.yellow[900]!.withOpacity(0.3)
+                          ? Colors.yellow[900]!.withValues(alpha: 0.3)
                           : Colors.yellow[100],
                       borderRadius: BorderRadius.circular(8),
                       border: Border.all(
                         color: isDark
-                            ? Colors.yellow[800]!.withOpacity(0.5)
+                            ? Colors.yellow[800]!.withValues(alpha: 0.5)
                             : Colors.yellow[200]!,
                       ),
                     ),
@@ -242,7 +242,7 @@ class NewClientStep5Screen extends StatelessWidget {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: isDark ? Colors.grey[800]!.withOpacity(0.2) : Colors.white,
+        color: isDark ? Colors.grey[800]!.withValues(alpha: 0.2) : Colors.white,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
           color: isDark ? Colors.grey[700]! : Colors.grey[200]!,
@@ -251,7 +251,7 @@ class NewClientStep5Screen extends StatelessWidget {
             ? []
             : [
                 BoxShadow(
-                  color: Colors.grey.withOpacity(0.1),
+                  color: Colors.grey.withValues(alpha: 0.1),
                   blurRadius: 10,
                   offset: const Offset(0, 4),
                 ),
@@ -295,7 +295,7 @@ class NewClientStep5Screen extends StatelessWidget {
           Text(
             label,
             style: theme.textTheme.bodyMedium?.copyWith(
-              color: theme.textTheme.bodyMedium?.color?.withOpacity(0.7),
+              color: theme.textTheme.bodyMedium?.color?.withValues(alpha: 0.7),
             ),
           ),
           Text(

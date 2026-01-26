@@ -1,8 +1,12 @@
+import 'package:gql/language.dart';
+import 'package:sunnylon/features/auth/data/models/login_response.dart';
+
+import '../../../../core/api/graphql/mutations/auth_mutations.graphql.dart';
 import '../../../../core/common/helpers/app_failure.dart';
 import '../../../../core/services/graphql/graphql_service.dart';
 
 abstract class AuthRemoteDataSource {
-  Future<Map<String, dynamic>> login(String email, String password);
+  Future<LoginResponse> login(String email, String password);
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
@@ -11,26 +15,19 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   AuthRemoteDataSourceImpl(this._graphqlService);
 
   @override
-  Future<Map<String, dynamic>> login(String email, String password) async {
-    const mutation = r'''
-     mutation Login($userName: String!, $password: String!) {
-  login(login: { password: $password, userName: $userName }) {
-    accessToken
-    expirationDate
-    refreshToken
-  }
-}
-    ''';
-
-    final result = await _graphqlService.mutate(
-      mutation,
-      variables: {'userName': email, 'password': password},
+  Future<LoginResponse> login(String email, String password) async {
+    final variables = Variables$Mutation$Login(
+      userName: email,
+      password: password,
     );
 
-    // Assuming the response structure based on common patterns.
-    // Adjust path based on actual API response.
+    final result = await _graphqlService.mutate(
+      printNode(documentNodeMutationLogin),
+      variables: variables.toJson(),
+    );
+
     if (result.containsKey('login')) {
-      return result['login'] as Map<String, dynamic>;
+      return LoginResponse.fromJson(result['login']);
     } else {
       throw const AppFailure.server(message: 'Invalid response format');
     }

@@ -29,24 +29,12 @@ class AuthRepositoryImpl implements AuthRepository {
     try {
       final data = await _remoteDataSource.login(email, password);
 
-      final accessToken = data['accessToken'] as String?;
-      final refreshToken = data['refreshToken'] as String?;
-      final userData = data['user'] as Map<String, dynamic>?;
+      await _tokenStore.saveTokens(
+        access: data.accessToken,
+        refresh: data.refreshToken,
+      );
 
-      if (accessToken != null) {
-        await _tokenStore.saveTokens(
-          access: accessToken,
-          refresh: refreshToken,
-        );
-      }
-
-      final user = userData != null
-          ? User(
-              id: userData['id'] ?? '',
-              email: userData['email'] ?? '',
-              name: userData['name'],
-            )
-          : User(id: 'mock_user_id', email: email, name: 'Mock User');
+      final user = User(id: 'mock_user_id', email: email, name: 'Mock User');
 
       _currentUser = user;
       _controller.add(user);

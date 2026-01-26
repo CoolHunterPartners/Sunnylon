@@ -99,7 +99,7 @@ class AppRouter {
             builder: (context, state) {
               final step = state.pathParameters['step'];
               // Pass form data via extra if needed, or use a shared Bloc/Provider
-              final formData = state.extra as Map<String, dynamic>? ?? {};
+              // final formData = state.extra as Map<String, dynamic>? ?? {};
 
               switch (step) {
                 case '1':

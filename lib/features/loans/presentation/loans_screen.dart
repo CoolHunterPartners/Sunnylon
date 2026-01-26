@@ -92,11 +92,11 @@ class _LoanRequestTile extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 16),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: isDark ? Colors.grey[800]!.withOpacity(0.5) : Colors.white,
+        color: isDark ? Colors.grey[800]!.withValues(alpha: 0.5) : Colors.white,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 4,
             offset: const Offset(0, 2),
           ),
@@ -184,9 +184,9 @@ class _StatusBadge extends StatelessWidget {
     // For better dark mode support:
     final isDark = Theme.of(context).brightness == Brightness.dark;
     if (isDark) {
-      backgroundColor = backgroundColor.withOpacity(0.2);
-      textColor = textColor.withOpacity(
-        0.9,
+      backgroundColor = backgroundColor.withValues(alpha: 0.2);
+      textColor = textColor.withValues(
+        alpha: 0.9,
       ); // Make text lighter or keep it colored but readable
       // Actually, standard material approach for badges in dark mode is usually container color with onContainer text.
       // But let's stick to the design reference colors roughly.

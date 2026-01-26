@@ -4,7 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 import 'package:sunnylon/core/config/theme/sunnylon_theme.dart'
-    as SunnylonTheme;
+    as sunnylon_theme;
 import 'package:sunnylon/features/auth/domain/repositories/auth_repository.dart';
 import 'package:sunnylon/features/auth/presentation/blocs/auth/auth_bloc.dart';
 import 'package:sunnylon/features/auth/presentation/blocs/auth/auth_event.dart';
@@ -45,7 +45,7 @@ class _MyAppState extends State<MyApp> {
             child: MaterialApp.router(
               title: AppConstants.appTitle,
               debugShowCheckedModeBanner: false,
-              theme: SunnylonTheme.lightTheme,
+              theme: sunnylon_theme.lightTheme,
               // darkTheme: AppTheme.darkTheme, // Optional
               locale: const Locale('es', 'ES'),
               supportedLocales: const [Locale('es', 'ES'), Locale('en', 'US')],
