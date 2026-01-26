@@ -1,3 +1,4 @@
+import 'package:gql/ast.dart';
 import 'package:graphql/client.dart';
 import 'package:sunnylon/core/common/helpers/app_failure.dart';
 
@@ -11,6 +12,10 @@ class GraphQLServiceImpl implements GraphQLService {
   final TokenStoreService _tokenStore;
 
   GraphQLServiceImpl(this._tokenStore) {
+    _initClient();
+  }
+
+  void _initClient() {
     var url = Environment.baseUrl;
     if (!url.endsWith('/')) {
       url = '$url/';
@@ -40,12 +45,12 @@ class GraphQLServiceImpl implements GraphQLService {
 
   @override
   Future<Map<String, dynamic>> query(
-    String queryString, {
+    DocumentNode query, {
     Map<String, dynamic>? variables,
     bool fetchPolicyNetworkOnly = false,
   }) async {
     final options = QueryOptions(
-      document: gql(queryString),
+      document: query,
       variables: variables ?? {},
       fetchPolicy: fetchPolicyNetworkOnly
           ? FetchPolicy.networkOnly
@@ -68,11 +73,11 @@ class GraphQLServiceImpl implements GraphQLService {
 
   @override
   Future<Map<String, dynamic>> mutate(
-    String mutationString, {
+    DocumentNode mutation, {
     Map<String, dynamic>? variables,
   }) async {
     final options = MutationOptions(
-      document: gql(mutationString),
+      document: mutation,
       variables: variables ?? {},
     );
 

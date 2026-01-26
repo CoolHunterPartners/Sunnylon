@@ -1,4 +1,3 @@
-import 'package:gql/language.dart';
 import 'package:sunnylon/features/auth/data/models/login_response.dart';
 
 import '../../../../core/api/graphql/mutations/auth_mutations.graphql.dart';
@@ -22,7 +21,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     );
 
     final result = await _graphqlService.mutate(
-      printNode(documentNodeMutationLogin),
+      documentNodeMutationLogin,
       variables: variables.toJson(),
     );
 

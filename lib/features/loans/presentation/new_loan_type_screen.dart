@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:sunnylon/core/config/router/app_navigator.dart';
 
 class NewLoanTypeScreen extends StatelessWidget {
   const NewLoanTypeScreen({super.key});
@@ -35,7 +35,7 @@ class NewLoanTypeScreen extends StatelessWidget {
                   title: 'Cliente existente',
                   subtitle: 'Selecciona un cliente de la lista',
                   onTap: () {
-                    context.pushNamed('new-loan-existing');
+                    AppNavigator.goToNewLoanExisting(context);
                   },
                 ),
                 const SizedBox(height: 16),
@@ -44,7 +44,7 @@ class NewLoanTypeScreen extends StatelessWidget {
                   title: 'Cliente nuevo',
                   subtitle: 'Registra un nuevo cliente',
                   onTap: () {
-                    context.pushNamed('new-client-step1');
+                    AppNavigator.goToNewClientStep1(context);
                   },
                 ),
               ],
