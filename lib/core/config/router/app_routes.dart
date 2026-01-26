@@ -21,8 +21,8 @@ enum AppRoute {
   newClientStep5('/loans/new-client-step5', 'new-client-step5'),
 
   // Loan Forms
-  newLoanType('new-type', 'new-loan-type'),
-  newLoanExisting('new-existing', 'new-loan-existing');
+  newLoanType('/loans/new-type', 'new-loan-type'),
+  newLoanExisting('/loans/existing-client', 'new-loan-existing');
 
   const AppRoute(this.path, this.name);
 

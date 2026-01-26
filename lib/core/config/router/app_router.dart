@@ -4,34 +4,8 @@ import 'package:go_router/go_router.dart';
 import '../../config/di/service_locator.dart';
 import '../factories/page_factory.dart';
 import 'app_router_refresh_notifier.dart';
+import 'app_routes.dart';
 import 'app_shell.dart';
-
-class AppRoute {
-  static const home = (name: 'home', path: '/');
-  static const login = (name: 'login', path: '/login');
-  static const forgotPassword = (
-    name: 'forgot-password',
-    path: '/forgot-password',
-  );
-
-  // Loans
-  static const loans = (name: 'loans', path: '/loans');
-  static const newLoanType = (name: 'new-loan-type', path: '/loans/new-type');
-  static const newClientLoan = (
-    name: 'new-client-loan',
-    path: '/loans/new-client/:step',
-  );
-  static const existingClientLoan = (
-    name: 'existing-client-loan',
-    path: '/loans/existing-client',
-  );
-
-  // Clients
-  static const clients = (name: 'clients', path: '/clients');
-
-  // Settings
-  static const settings = (name: 'settings', path: '/settings');
-}
 
 class AppRouter {
   static final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -96,35 +70,31 @@ class AppRouter {
             name: AppRoute.newLoanType.name,
             builder: (context, state) => PageFactory.createNewLoanTypePage(),
           ),
-          // GoRoute(
-          //   path: AppRoute.newClientLoan.path,
-          //   name: AppRoute.newClientLoan.name,
-          //   builder: (context, state) =>
-          //       PageFactory.createExistingClientLoanFormPage(),
-          // ),
+          // New Client Loan Steps
           GoRoute(
-            path: AppRoute.newClientLoan.path,
-            name: AppRoute.newClientLoan.name,
-            builder: (context, state) {
-              final step = state.pathParameters['step'];
-              // Pass form data via extra if needed, or use a shared Bloc/Provider
-              // final formData = state.extra as Map<String, dynamic>? ?? {};
-
-              switch (step) {
-                case '1':
-                  return PageFactory.createNewClientStep1Page();
-                case '2':
-                  return PageFactory.createNewClientStep2Page();
-                case '3':
-                  return PageFactory.createNewClientStep3Page();
-                case '4':
-                  return PageFactory.createNewClientStep4Page();
-                case '5':
-                  return PageFactory.createNewClientStep5Page();
-                default:
-                  return PageFactory.createNewClientStep1Page();
-              }
-            },
+            path: AppRoute.newClientStep1.path,
+            name: AppRoute.newClientStep1.name,
+            builder: (context, state) => PageFactory.createNewClientStep1Page(),
+          ),
+          GoRoute(
+            path: AppRoute.newClientStep2.path,
+            name: AppRoute.newClientStep2.name,
+            builder: (context, state) => PageFactory.createNewClientStep2Page(),
+          ),
+          GoRoute(
+            path: AppRoute.newClientStep3.path,
+            name: AppRoute.newClientStep3.name,
+            builder: (context, state) => PageFactory.createNewClientStep3Page(),
+          ),
+          GoRoute(
+            path: AppRoute.newClientStep4.path,
+            name: AppRoute.newClientStep4.name,
+            builder: (context, state) => PageFactory.createNewClientStep4Page(),
+          ),
+          GoRoute(
+            path: AppRoute.newClientStep5.path,
+            name: AppRoute.newClientStep5.name,
+            builder: (context, state) => PageFactory.createNewClientStep5Page(),
           ),
           GoRoute(
             path: AppRoute.settings.path,
