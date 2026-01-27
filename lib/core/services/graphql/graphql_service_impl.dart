@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:gql/ast.dart';
 import 'package:graphql/client.dart';
 import 'package:sunnylon/core/common/helpers/app_failure.dart';
@@ -6,6 +7,7 @@ import '../../config/environment.dart';
 import '../local_storage/token_store_contract.dart';
 import 'graphql_service.dart';
 import 'helpers/graphql_exception_handler.dart';
+import 'links/error_logging_link.dart';
 import 'links/refresh_token_link.dart';
 import 'links/retry_link.dart';
 
@@ -32,7 +34,13 @@ class GraphQLServiceImpl implements GraphQLService {
     final retryLink = RetryLink(maxRetries: Environment.apiRetryAttempts);
     final refreshTokenLink = RefreshTokenLink(_tokenStore);
 
-    final link = Link.from([retryLink, refreshTokenLink, authLink, httpLink]);
+    final link = Link.from([
+      if (kDebugMode) ErrorLoggingLink(),
+      retryLink,
+      refreshTokenLink,
+      authLink,
+      httpLink,
+    ]);
 
     _client = GraphQLClient(
       link: link,
