@@ -16,6 +16,7 @@ type LoginResponse {
 type Query {
   refreshToken(oldRefreshToken: String!): LoginResponse
   profile: Profile
+  clients(skip: Int, take: Int, order: [GetClientDtoSortInput!], where: GetClientDtoFilterInput): ClientListResponse
 }
 
 type Profile {
@@ -25,4 +26,29 @@ type Profile {
   lastName: String
   phone: String
   userName: String
+}
+
+type ClientListResponse {
+  items: [ClientDto]
+  totalCount: Int
+}
+
+type ClientDto {
+  idClient: String
+  name: String
+  lastName: String
+  fullName: String
+  email: String
+  identification: String
+  phone: String
+  birthDay: String
+}
+
+input GetClientDtoSortInput {
+  field: String
+  dir: String
+}
+
+input GetClientDtoFilterInput {
+  search: String
 }

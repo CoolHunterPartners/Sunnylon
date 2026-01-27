@@ -3,6 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sunnylon/features/clients/presentation/clients_screen.dart';
 import 'package:sunnylon/features/home/presentation/today_route_screen.dart';
 
+import '../../../../features/clients/domain/repositories/clients_repository.dart';
+import '../../../../features/clients/presentation/blocs/clients_bloc.dart';
+import '../../../../features/clients/presentation/blocs/clients_event.dart';
 import '../../../features/auth/domain/use_cases/login_use_case.dart';
 import '../../../features/auth/presentation/blocs/login/login_bloc.dart';
 // Screens
@@ -40,7 +43,11 @@ class PageFactory {
 
   /// Creates the clients page
   static Widget createClientsPage() {
-    return const ClientsScreen();
+    return BlocProvider(
+      create: (context) =>
+          ClientsBloc(sl<ClientsRepository>())..add(const ClientsStarted()),
+      child: const ClientsScreen(),
+    );
   }
 
   /// Creates the settings page

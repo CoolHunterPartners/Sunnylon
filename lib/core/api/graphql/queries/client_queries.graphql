@@ -1,0 +1,20 @@
+query GetClient(
+  $page: Int
+  $pageSize: Int
+  $sort: [GetClientDtoSortInput!]
+  $filter: GetClientDtoFilterInput
+) {
+  clients(skip: $page, take: $pageSize, order: $sort, where: $filter) {
+    items {
+      idClient
+      name
+      lastName
+      fullName
+      email
+      identification
+      phone
+      birthDay
+    }
+    totalCount
+  }
+}

@@ -3,6 +3,12 @@ import 'package:get_it/get_it.dart';
 import 'package:sunnylon/features/auth/domain/use_cases/login_use_case.dart';
 import 'package:sunnylon/features/auth/presentation/blocs/auth/auth_bloc.dart';
 import 'package:sunnylon/features/auth/presentation/blocs/login/login_bloc.dart';
+import 'package:sunnylon/features/clients/data/data_sources/clients_local_data_source.dart';
+import 'package:sunnylon/features/clients/data/data_sources/clients_remote_data_source.dart';
+import 'package:sunnylon/features/clients/data/data_sources/daos/clients_dao.dart';
+import 'package:sunnylon/features/clients/data/repositories/clients_repository_impl.dart';
+import 'package:sunnylon/features/clients/domain/repositories/clients_repository.dart';
+import 'package:sunnylon/features/clients/presentation/blocs/clients_bloc.dart';
 
 import '../../../features/auth/data/data_sources/auth_local_data_source.dart';
 import '../../../features/auth/data/data_sources/auth_remote_data_source.dart';
@@ -35,16 +41,25 @@ Future<void> setUpServiceLocator() async {
   sl.registerLazySingleton<GraphQLService>(
     () => GraphQLServiceImpl(sl<TokenStoreService>()),
   );
+  //! DAOs
+  sl.registerLazySingleton<ClientsDao>(() => ClientsDao(sl<AppDatabase>()));
+  sl.registerLazySingleton<UsersProfileDao>(
+    () => UsersProfileDao(sl<AppDatabase>()),
+  );
 
   //! Data Sources
   sl.registerLazySingleton<AuthRemoteDataSource>(
     () => AuthRemoteDataSourceImpl(sl<GraphQLService>()),
   );
-  sl.registerLazySingleton<UsersProfileDao>(
-    () => UsersProfileDao(sl<AppDatabase>()),
-  );
+
   sl.registerLazySingleton<AuthLocalDataSource>(
     () => AuthLocalDataSourceImpl(sl<UsersProfileDao>()),
+  );
+  sl.registerLazySingleton<ClientsRemoteDataSource>(
+    () => ClientsRemoteDataSourceImpl(sl<GraphQLService>()),
+  );
+  sl.registerLazySingleton<ClientsLocalDataSource>(
+    () => ClientsLocalDataSourceImpl(sl<ClientsDao>()),
   );
 
   //! Repositories
@@ -53,6 +68,12 @@ Future<void> setUpServiceLocator() async {
       sl<AuthRemoteDataSource>(),
       sl<AuthLocalDataSource>(),
       sl<TokenStoreService>(),
+    ),
+  );
+  sl.registerLazySingleton<ClientsRepository>(
+    () => ClientsRepositoryImpl(
+      sl<ClientsRemoteDataSource>(),
+      sl<ClientsLocalDataSource>(),
     ),
   );
 
@@ -67,4 +88,7 @@ Future<void> setUpServiceLocator() async {
   //! Blocs
   sl.registerLazySingleton<AuthBloc>(() => AuthBloc(sl<AuthRepository>()));
   sl.registerLazySingleton<LoginBloc>(() => LoginBloc(sl<LoginUseCase>()));
+  sl.registerLazySingleton<ClientsBloc>(
+    () => ClientsBloc(sl<ClientsRepository>()),
+  );
 }

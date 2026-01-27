@@ -105,6 +105,226 @@ class _CopyWithStubImpl$Input$LoginInput<TRes>
   call({String? userName, String? password}) => _res;
 }
 
+class Input$GetClientDtoSortInput {
+  factory Input$GetClientDtoSortInput({String? field, String? dir}) =>
+      Input$GetClientDtoSortInput._({
+        if (field != null) r'field': field,
+        if (dir != null) r'dir': dir,
+      });
+
+  Input$GetClientDtoSortInput._(this._$data);
+
+  factory Input$GetClientDtoSortInput.fromJson(Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    if (data.containsKey('field')) {
+      final l$field = data['field'];
+      result$data['field'] = (l$field as String?);
+    }
+    if (data.containsKey('dir')) {
+      final l$dir = data['dir'];
+      result$data['dir'] = (l$dir as String?);
+    }
+    return Input$GetClientDtoSortInput._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  String? get field => (_$data['field'] as String?);
+
+  String? get dir => (_$data['dir'] as String?);
+
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    if (_$data.containsKey('field')) {
+      final l$field = field;
+      result$data['field'] = l$field;
+    }
+    if (_$data.containsKey('dir')) {
+      final l$dir = dir;
+      result$data['dir'] = l$dir;
+    }
+    return result$data;
+  }
+
+  CopyWith$Input$GetClientDtoSortInput<Input$GetClientDtoSortInput>
+  get copyWith => CopyWith$Input$GetClientDtoSortInput(this, (i) => i);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (other is! Input$GetClientDtoSortInput ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$field = field;
+    final lOther$field = other.field;
+    if (_$data.containsKey('field') != other._$data.containsKey('field')) {
+      return false;
+    }
+    if (l$field != lOther$field) {
+      return false;
+    }
+    final l$dir = dir;
+    final lOther$dir = other.dir;
+    if (_$data.containsKey('dir') != other._$data.containsKey('dir')) {
+      return false;
+    }
+    if (l$dir != lOther$dir) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$field = field;
+    final l$dir = dir;
+    return Object.hashAll([
+      _$data.containsKey('field') ? l$field : const {},
+      _$data.containsKey('dir') ? l$dir : const {},
+    ]);
+  }
+}
+
+abstract class CopyWith$Input$GetClientDtoSortInput<TRes> {
+  factory CopyWith$Input$GetClientDtoSortInput(
+    Input$GetClientDtoSortInput instance,
+    TRes Function(Input$GetClientDtoSortInput) then,
+  ) = _CopyWithImpl$Input$GetClientDtoSortInput;
+
+  factory CopyWith$Input$GetClientDtoSortInput.stub(TRes res) =
+      _CopyWithStubImpl$Input$GetClientDtoSortInput;
+
+  TRes call({String? field, String? dir});
+}
+
+class _CopyWithImpl$Input$GetClientDtoSortInput<TRes>
+    implements CopyWith$Input$GetClientDtoSortInput<TRes> {
+  _CopyWithImpl$Input$GetClientDtoSortInput(this._instance, this._then);
+
+  final Input$GetClientDtoSortInput _instance;
+
+  final TRes Function(Input$GetClientDtoSortInput) _then;
+
+  static const _undefined = <dynamic, dynamic>{};
+
+  TRes call({Object? field = _undefined, Object? dir = _undefined}) => _then(
+    Input$GetClientDtoSortInput._({
+      ..._instance._$data,
+      if (field != _undefined) 'field': (field as String?),
+      if (dir != _undefined) 'dir': (dir as String?),
+    }),
+  );
+}
+
+class _CopyWithStubImpl$Input$GetClientDtoSortInput<TRes>
+    implements CopyWith$Input$GetClientDtoSortInput<TRes> {
+  _CopyWithStubImpl$Input$GetClientDtoSortInput(this._res);
+
+  TRes _res;
+
+  call({String? field, String? dir}) => _res;
+}
+
+class Input$GetClientDtoFilterInput {
+  factory Input$GetClientDtoFilterInput({String? search}) =>
+      Input$GetClientDtoFilterInput._({if (search != null) r'search': search});
+
+  Input$GetClientDtoFilterInput._(this._$data);
+
+  factory Input$GetClientDtoFilterInput.fromJson(Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    if (data.containsKey('search')) {
+      final l$search = data['search'];
+      result$data['search'] = (l$search as String?);
+    }
+    return Input$GetClientDtoFilterInput._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  String? get search => (_$data['search'] as String?);
+
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    if (_$data.containsKey('search')) {
+      final l$search = search;
+      result$data['search'] = l$search;
+    }
+    return result$data;
+  }
+
+  CopyWith$Input$GetClientDtoFilterInput<Input$GetClientDtoFilterInput>
+  get copyWith => CopyWith$Input$GetClientDtoFilterInput(this, (i) => i);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (other is! Input$GetClientDtoFilterInput ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$search = search;
+    final lOther$search = other.search;
+    if (_$data.containsKey('search') != other._$data.containsKey('search')) {
+      return false;
+    }
+    if (l$search != lOther$search) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$search = search;
+    return Object.hashAll([_$data.containsKey('search') ? l$search : const {}]);
+  }
+}
+
+abstract class CopyWith$Input$GetClientDtoFilterInput<TRes> {
+  factory CopyWith$Input$GetClientDtoFilterInput(
+    Input$GetClientDtoFilterInput instance,
+    TRes Function(Input$GetClientDtoFilterInput) then,
+  ) = _CopyWithImpl$Input$GetClientDtoFilterInput;
+
+  factory CopyWith$Input$GetClientDtoFilterInput.stub(TRes res) =
+      _CopyWithStubImpl$Input$GetClientDtoFilterInput;
+
+  TRes call({String? search});
+}
+
+class _CopyWithImpl$Input$GetClientDtoFilterInput<TRes>
+    implements CopyWith$Input$GetClientDtoFilterInput<TRes> {
+  _CopyWithImpl$Input$GetClientDtoFilterInput(this._instance, this._then);
+
+  final Input$GetClientDtoFilterInput _instance;
+
+  final TRes Function(Input$GetClientDtoFilterInput) _then;
+
+  static const _undefined = <dynamic, dynamic>{};
+
+  TRes call({Object? search = _undefined}) => _then(
+    Input$GetClientDtoFilterInput._({
+      ..._instance._$data,
+      if (search != _undefined) 'search': (search as String?),
+    }),
+  );
+}
+
+class _CopyWithStubImpl$Input$GetClientDtoFilterInput<TRes>
+    implements CopyWith$Input$GetClientDtoFilterInput<TRes> {
+  _CopyWithStubImpl$Input$GetClientDtoFilterInput(this._res);
+
+  TRes _res;
+
+  call({String? search}) => _res;
+}
+
 enum Enum$__TypeKind {
   SCALAR,
   OBJECT,

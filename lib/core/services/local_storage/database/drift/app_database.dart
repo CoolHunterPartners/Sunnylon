@@ -6,6 +6,7 @@ import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
 import '../../../../../../features/auth/data/data_sources/daos/users_profile_dao.dart';
+import '../../../../../../features/clients/data/data_sources/daos/clients_dao.dart';
 import 'tables/address_table.dart';
 import 'tables/bank_account_table.dart';
 import 'tables/client_address_table.dart';
@@ -63,7 +64,7 @@ part 'app_database.g.dart';
     GenderTable,
     UsersProfileTable,
   ],
-  daos: [UsersProfileDao],
+  daos: [UsersProfileDao, ClientsDao],
 )
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
