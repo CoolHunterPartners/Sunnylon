@@ -6,6 +6,7 @@ enum AppRoute {
   // Home / Dashboard (Shell)
   home('/', 'home'),
   clients('/clients', 'clients'),
+  createClient('/clients/create', 'client-create'),
   loans('/loans', 'loans'),
   settings('/settings', 'settings'),
 

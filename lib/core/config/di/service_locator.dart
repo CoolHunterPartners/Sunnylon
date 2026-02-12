@@ -8,7 +8,10 @@ import 'package:sunnylon/features/clients/data/data_sources/clients_remote_data_
 import 'package:sunnylon/features/clients/data/data_sources/daos/clients_dao.dart';
 import 'package:sunnylon/features/clients/data/repositories/clients_repository_impl.dart';
 import 'package:sunnylon/features/clients/domain/repositories/clients_repository.dart';
+import 'package:sunnylon/features/clients/domain/use_cases/create_client_use_case.dart';
+import 'package:sunnylon/features/clients/domain/use_cases/get_common_types_use_case.dart';
 import 'package:sunnylon/features/clients/presentation/blocs/clients_bloc.dart';
+import 'package:sunnylon/features/clients/presentation/blocs/create_client/create_client_bloc.dart';
 
 import '../../../features/auth/data/data_sources/auth_local_data_source.dart';
 import '../../../features/auth/data/data_sources/auth_remote_data_source.dart';
@@ -79,6 +82,10 @@ Future<void> setUpServiceLocator() async {
 
   //! Use Cases
   sl.registerLazySingleton(() => LoginUseCase(sl<AuthRepository>()));
+  sl.registerLazySingleton(() => CreateClientUseCase(sl<ClientsRepository>()));
+  sl.registerLazySingleton(
+    () => GetCommonTypesUseCase(sl<ClientsRepository>()),
+  );
 
   //! Core Config
   sl.registerLazySingleton(
@@ -90,5 +97,11 @@ Future<void> setUpServiceLocator() async {
   sl.registerLazySingleton<LoginBloc>(() => LoginBloc(sl<LoginUseCase>()));
   sl.registerLazySingleton<ClientsBloc>(
     () => ClientsBloc(sl<ClientsRepository>()),
+  );
+  sl.registerFactory<CreateClientBloc>(
+    () => CreateClientBloc(
+      createClientUseCase: sl<CreateClientUseCase>(),
+      getCommonTypesUseCase: sl<GetCommonTypesUseCase>(),
+    ),
   );
 }

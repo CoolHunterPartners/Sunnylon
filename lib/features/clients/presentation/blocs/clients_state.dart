@@ -19,11 +19,19 @@ final class ClientsLoading extends ClientsState {
 
 final class ClientsLoaded extends ClientsState {
   final List<Client> clients;
+  final bool hasReachedMax;
 
-  const ClientsLoaded(this.clients);
+  const ClientsLoaded(this.clients, {this.hasReachedMax = false});
+
+  ClientsLoaded copyWith({List<Client>? clients, bool? hasReachedMax}) {
+    return ClientsLoaded(
+      clients ?? this.clients,
+      hasReachedMax: hasReachedMax ?? this.hasReachedMax,
+    );
+  }
 
   @override
-  List<Object?> get props => [clients];
+  List<Object?> get props => [clients, hasReachedMax];
 }
 
 final class ClientsError extends ClientsState {

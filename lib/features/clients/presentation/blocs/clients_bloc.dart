@@ -13,6 +13,7 @@ class ClientsBloc extends Bloc<ClientsEvent, ClientsState> {
     on<ClientsStarted>(_onStarted);
     on<ClientsSearchChanged>(_onSearchChanged);
     on<ClientsRefreshed>(_onRefreshed);
+    on<ClientsNextPageRequested>(_onNextPageRequested);
   }
 
   Future<void> _onStarted(
@@ -27,18 +28,53 @@ class ClientsBloc extends Bloc<ClientsEvent, ClientsState> {
     ClientsRefreshed event,
     Emitter<ClientsState> emit,
   ) async {
-    // Optionally show loading or just update
-    // emit(const ClientsLoading()); // Depending on UX preference
+    // Reset to initial load
     await _loadClients(emit);
+  }
+
+  Future<void> _onNextPageRequested(
+    ClientsNextPageRequested event,
+    Emitter<ClientsState> emit,
+  ) async {
+    final currentState = state;
+    if (currentState is! ClientsLoaded || currentState.hasReachedMax) return;
+
+    try {
+      final currentClients = currentState.clients;
+      // Fetch next page
+      final result = await _repository.getClients(
+        page: currentClients.length, // skip
+        pageSize: 50, // take
+      );
+
+      result.fold(
+        (newClients) {
+          if (newClients.isEmpty) {
+            emit(currentState.copyWith(hasReachedMax: true));
+          } else {
+            emit(
+              currentState.copyWith(
+                clients: List.of(currentClients)..addAll(newClients),
+                hasReachedMax: false,
+              ),
+            );
+          }
+        },
+        (failure) {
+          // If error loading next page, maybe show snackbar or just ignore?
+          // Keeping state as is or emitting error might replace the list with error view.
+          // For now, let's keep it simple and maybe not emit error to avoid destroying list.
+        },
+      );
+    } catch (_) {
+      // Handle error
+    }
   }
 
   Future<void> _onSearchChanged(
     ClientsSearchChanged event,
     Emitter<ClientsState> emit,
   ) async {
-    // Debouncing should ideally be handled by a transformer,
-    // but for simplicity/mvp we execute search immediately or rely on Repo.
-    // For now, let's just trigger load with filter.
     emit(const ClientsLoading());
     await _loadClients(emit, query: event.query);
   }
@@ -46,17 +82,19 @@ class ClientsBloc extends Bloc<ClientsEvent, ClientsState> {
   Future<void> _loadClients(Emitter<ClientsState> emit, {String? query}) async {
     final Map<String, dynamic> filter = {};
     if (query != null && query.isNotEmpty) {
-      // Assuming 'q' or specific field filter for search.
-      // Adjust key based on backend/repo implementation requirements.
       filter['q'] = query;
     }
 
     final result = await _repository.getClients(
       filter: filter.isNotEmpty ? filter : null,
+      sort: ['name'],
+      page: 0,
+      pageSize: 50,
     );
 
     result.fold(
-      (clients) => emit(ClientsLoaded(clients)),
+      (clients) =>
+          emit(ClientsLoaded(clients, hasReachedMax: clients.length < 10)),
       (failure) => emit(ClientsError(failure.message)),
     );
   }

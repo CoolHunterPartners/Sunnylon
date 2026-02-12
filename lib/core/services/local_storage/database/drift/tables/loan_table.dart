@@ -2,7 +2,7 @@ import 'package:drift/drift.dart';
 
 class LoanTable extends Table {
   TextColumn get loanId => text()(); // UUID
-  IntColumn get loanNo => integer().autoIncrement()(); // Identity
+  IntColumn get loanNo => integer()(); // Identity
   TextColumn get idClient => text()(); // UUID
   TextColumn get loanTermId => text()(); // UUID
   TextColumn get authorizeId => text().nullable()(); // UUID

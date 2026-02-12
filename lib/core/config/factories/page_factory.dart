@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sunnylon/features/clients/presentation/clients_screen.dart';
+import 'package:sunnylon/features/clients/presentation/pages/client_create_page.dart';
 import 'package:sunnylon/features/home/presentation/today_route_screen.dart';
 
 import '../../../../features/clients/domain/repositories/clients_repository.dart';
 import '../../../../features/clients/presentation/blocs/clients_bloc.dart';
 import '../../../../features/clients/presentation/blocs/clients_event.dart';
+import '../../../../features/clients/presentation/blocs/create_client/create_client_bloc.dart';
+import '../../../../features/clients/presentation/blocs/create_client/create_client_event.dart';
 import '../../../features/auth/domain/use_cases/login_use_case.dart';
 import '../../../features/auth/presentation/blocs/login/login_bloc.dart';
 // Screens
@@ -47,6 +50,14 @@ class PageFactory {
       create: (context) =>
           ClientsBloc(sl<ClientsRepository>())..add(const ClientsStarted()),
       child: const ClientsScreen(),
+    );
+  }
+
+  /// Creates the create client page
+  static Widget createCreateClientPage() {
+    return BlocProvider(
+      create: (context) => sl<CreateClientBloc>()..add(LoadCommonTypesEvent()),
+      child: const ClientCreatePage(),
     );
   }
 

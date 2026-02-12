@@ -1,14 +1,18 @@
 import 'dart:async';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:sunnylon/core/api/graphql/schema.graphql.dart';
 
 import '../../../../core/common/helpers/app_failure.dart';
 import '../../../../core/common/helpers/result.dart';
 import '../../domain/entities/client.dart';
+import '../../domain/entities/common_types.dart';
+import '../../domain/entities/create_client_params.dart';
 import '../../domain/repositories/clients_repository.dart';
 import '../data_sources/clients_local_data_source.dart';
 import '../data_sources/clients_remote_data_source.dart';
 import '../mappers/client_mapper.dart';
+import '../mappers/common_types_mapper.dart';
 
 class ClientsRepositoryImpl implements ClientsRepository {
   final ClientsRemoteDataSource _remoteDataSource;
@@ -77,6 +81,42 @@ class ClientsRepositoryImpl implements ClientsRepository {
         return Result.failure(e);
       }
       return Result.failure(AppFailure.common(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Result<String>> createClient(CreateClientParams params) async {
+    try {
+      final input = Input$CreateClientViewModelInput(
+        name: params.name,
+        lastName: params.lastName,
+        genderId: params.genderId,
+        identificationTypeId: params.identificationTypeId,
+        identification: params.identification,
+        birthDay: params.birthDay,
+        phone: params.phone,
+        email: params.email,
+        addresses: [],
+        jobs: [],
+        related: [],
+      );
+
+      final successMessage = await _remoteDataSource.createClient(input);
+      return Result.success(successMessage);
+    } catch (e) {
+      if (e is AppFailure) return Result.failure(e);
+      return Result.failure(AppFailure.server(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Result<CommonTypes>> getCommonTypes() async {
+    try {
+      final result = await _remoteDataSource.getCommonTypes();
+      return Result.success(result.toDomain());
+    } catch (e) {
+      if (e is AppFailure) return Result.failure(e);
+      return Result.failure(AppFailure.server(message: e.toString()));
     }
   }
 }

@@ -59,6 +59,11 @@ class AppRouter {
             name: AppRoute.clients.name,
             builder: (context, state) => PageFactory.createClientsPage(),
           ),
+          GoRoute(
+            path: AppRoute.createClient.path,
+            name: AppRoute.createClient.name,
+            builder: (context, state) => PageFactory.createCreateClientPage(),
+          ),
 
           GoRoute(
             path: AppRoute.loans.path,

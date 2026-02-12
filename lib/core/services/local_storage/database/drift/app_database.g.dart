@@ -3759,12 +3759,8 @@ class $LoanTableTable extends LoanTable
     'loan_no',
     aliasedName,
     false,
-    hasAutoIncrement: true,
     type: DriftSqlType.int,
     requiredDuringInsert: true,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'PRIMARY KEY AUTOINCREMENT',
-    ),
   );
   static const VerificationMeta _idClientMeta = const VerificationMeta(
     'idClient',

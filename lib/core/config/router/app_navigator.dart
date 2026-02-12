@@ -17,6 +17,9 @@ class AppNavigator {
   static void goToClients(BuildContext context) =>
       context.goNamed(AppRoute.clients.name);
 
+  static void goToCreateClient(BuildContext context) =>
+      context.goNamed(AppRoute.createClient.name);
+
   static void goToLoans(BuildContext context) =>
       context.goNamed(AppRoute.loans.name);
 

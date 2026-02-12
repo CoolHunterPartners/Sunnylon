@@ -1,0 +1,3 @@
+mutation CreateClient($model: CreateClientViewModelInput!) {
+  registerClient(model: $model)
+}

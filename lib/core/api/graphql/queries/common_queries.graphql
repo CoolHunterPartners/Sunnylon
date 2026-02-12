@@ -1,0 +1,26 @@
+query Common {
+  genders {
+    key
+    value
+  }
+  currencies {
+    key
+    value
+  }
+  provinces {
+    key
+    value
+  }
+  identificationTypes {
+    key
+    value
+  }
+  relatedType {
+    key
+    value
+  }
+  relationShiptType {
+    key
+    value
+  }
+}

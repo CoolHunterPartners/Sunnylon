@@ -60,6 +60,7 @@ dependencies:
   gql: ^1.0.1
   http: ^1.6.0
   json_annotation: ^4.9.0
+  lottie: ^3.3.2
 
 dev_dependencies:
   flutter_test:

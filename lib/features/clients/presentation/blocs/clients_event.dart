@@ -23,3 +23,7 @@ final class ClientsSearchChanged extends ClientsEvent {
 final class ClientsRefreshed extends ClientsEvent {
   const ClientsRefreshed();
 }
+
+final class ClientsNextPageRequested extends ClientsEvent {
+  const ClientsNextPageRequested();
+}

@@ -1,5 +1,6 @@
 type Mutation {
   login(login: LoginInput!): LoginResponse
+  registerClient(model: CreateClientViewModelInput!): String
 }
 
 input LoginInput {
@@ -17,6 +18,12 @@ type Query {
   refreshToken(oldRefreshToken: String!): LoginResponse
   profile: Profile
   clients(skip: Int, take: Int, order: [GetClientDtoSortInput!], where: GetClientDtoFilterInput): ClientListResponse
+  genders: [KeyValue]
+  currencies: [KeyValue]
+  provinces: [KeyValue]
+  identificationTypes: [KeyValue]
+  relatedType: [KeyValue]
+  relationShiptType: [KeyValue]
 }
 
 type Profile {
@@ -51,4 +58,35 @@ input GetClientDtoSortInput {
 
 input GetClientDtoFilterInput {
   search: String
+}
+
+input CreateClientViewModelInput {
+  name: String
+  lastName: String
+  genderId: String
+  identificationTypeId: String
+  identification: String
+  birthDay: String
+  phone: String
+  email: String
+  addresses: [AddressInput]
+  jobs: [JobInput]
+  related: [RelatedInput]
+}
+
+input AddressInput {
+  id: String
+}
+
+input JobInput {
+  id: String
+}
+
+input RelatedInput {
+  id: String
+}
+
+type KeyValue {
+  key: String
+  value: String
 }
