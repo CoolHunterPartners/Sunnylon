@@ -3,13 +3,36 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 /// 🌐 Environment Configuration
 ///
-/// Centraliza todas las variables de entorno de la aplicación.
-/// Las variables se cargan desde el archivo .env
-class Environment {
-  // 🚀 Singleton pattern
-  static final Environment _instance = Environment._internal();
-  factory Environment() => _instance;
-  Environment._internal();
+/// Define los entornos de la aplicación y centraliza las variables de entorno.
+enum Environment {
+  dev,
+  prod,
+  local;
+
+  /// 🌐 Determina el entorno actual en ejecución
+  static Environment get current {
+    if (kReleaseMode) {
+      return Environment.prod;
+    }
+
+    const env = String.fromEnvironment('ENV', defaultValue: 'dev');
+
+    return switch (env) {
+      'production' || 'prod' => Environment.prod,
+      'local' => Environment.local,
+      'dev' || _ => Environment.dev,
+    };
+  }
+
+  /// Retorna el archivo .env correspondiente según el entorno
+  String get fileName => switch (this) {
+    Environment.prod => '.env.production',
+    Environment.local => '.env.local',
+    Environment.dev => '.env.dev',
+  };
+
+  /// Compatibilidad con llamadas previas
+  static String getEnvironmentFile() => current.fileName;
 
   /// 🎯 Base URL del API
   static String get baseUrl {
@@ -28,20 +51,4 @@ class Environment {
   /// 🧪 Modo debug activado
   static bool get isDebugMode =>
       dotenv.env['DEBUG_MODE']?.toLowerCase() == 'true';
-
-  /// 🌐 Determina qué archivo .env cargar según el entorno
-  static String getEnvironmentFile() {
-    if (kReleaseMode) {
-      return '.env.production';
-    }
-
-    const env = String.fromEnvironment('ENV', defaultValue: 'dev');
-
-    return switch (env) {
-      'local' => '.env.local',
-      'production' => '.env.production',
-      'dev' => '.env.dev',
-      _ => '.env.dev',
-    };
-  }
 }

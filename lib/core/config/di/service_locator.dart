@@ -18,17 +18,35 @@ import '../../../features/auth/data/data_sources/auth_remote_data_source.dart';
 import '../../../features/auth/data/data_sources/daos/users_profile_dao.dart';
 import '../../../features/auth/data/repositories/auth_repository_impl.dart';
 import '../../../features/auth/domain/repositories/auth_repository.dart';
+import '../../observability/observability_service.dart';
 import '../../services/device/device_info_service.dart';
 import '../../services/graphql/graphql_service.dart';
 import '../../services/graphql/graphql_service_impl.dart';
 import '../../services/local_storage/database/drift/app_database.dart';
 import '../../services/local_storage/token_store_contract.dart';
 import '../../services/network/network_info.dart';
+import '../environment.dart';
 import '../router/app_router_refresh_notifier.dart';
 
 GetIt sl = GetIt.instance;
 
-Future<void> setUpServiceLocator() async {
+/// Inicializa el Service Locator.
+///
+/// Si no se proporciona [env], se deduce automáticamente con [Environment.current].
+Future<void> setUpServiceLocator([Environment? env]) async {
+  final environment = env ?? Environment.current;
+
+  // ---------------------------------------------------------------------------
+  // 1. Capa Core: Observabilidad / Telemetría
+  // ---------------------------------------------------------------------------
+  sl.registerLazySingleton<ObservabilityService>(() {
+    return switch (environment) {
+      Environment.prod => SentryObservabilityService(),
+      Environment.dev => DebugConsoleObservabilityService(),
+      Environment.local => DebugConsoleObservabilityService(),
+    };
+  });
+
   //! Services
   sl.registerLazySingleton<NetworkInfo>(
     () => NetworkInfoImpl(sl<Connectivity>()),
@@ -105,3 +123,6 @@ Future<void> setUpServiceLocator() async {
     ),
   );
 }
+
+/// Alias para [setUpServiceLocator]
+Future<void> setupInjection([Environment? env]) => setUpServiceLocator(env);

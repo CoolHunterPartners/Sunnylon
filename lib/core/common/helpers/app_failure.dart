@@ -6,6 +6,13 @@ sealed class AppFailure extends Equatable {
 
   final String message;
 
+  factory AppFailure.fromError(Object error) {
+    return switch (error) {
+      final AppFailure failure => failure,
+      _ => AppFailure.common(message: error.toString()),
+    };
+  }
+
   // ✅ Factory constructors que pueden ser const
   const factory AppFailure.network({required String message}) = NetworkFailure;
 
